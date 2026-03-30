@@ -1,4 +1,4 @@
-package it.adozioni.animali.model;
+package it.adozioni.animali.Model;
 
 import it.adozioni.animali.Model.VisitaMedica;
 import jakarta.persistence.*;

@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="Changes&#10;Animale.java">
-      <change afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Dto/AnimaleDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Mapper/CentroAdozioneMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Mapper/CentroAdozioneMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/Animale.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/Animale.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/CentroAdozione.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/CentroAdozione.java" afterDir="false" />
     </list>
@@ -57,7 +55,7 @@
   &quot;fromUser&quot;: false
 }</component>
   <component name="ProjectId" id="3BeqmbEA5qIYbeTogDcefJM8SLz" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">

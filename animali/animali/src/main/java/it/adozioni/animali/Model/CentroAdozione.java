@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "centri_adozione", schema = "public") // "public" è lo schema standard di Postgres
+@Table(name = "centri_adozione", schema = "public")
 @Getter
 @Setter
 @NoArgsConstructor // Fondamentale per JPA
