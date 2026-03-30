@@ -1,6 +1,6 @@
 package it.adozioni.animali.Dto;
 
-import it.adozioni.animali.model.Animale;
+import it.adozioni.animali.Model.Animale;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
