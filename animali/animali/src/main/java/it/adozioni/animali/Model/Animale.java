@@ -23,6 +23,6 @@ public class Animale {
     boolean isAdottato;
 
     //relazione 1-n con VisitaMedica
-    @OneToMany(mappedBy = "Animale")
+    @OneToMany(mappedBy = "animale")
     List<VisitaMedica> visiteMediche;
 }
