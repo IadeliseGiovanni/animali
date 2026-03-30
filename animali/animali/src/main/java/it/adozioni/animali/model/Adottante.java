@@ -1,7 +1,7 @@
-package it.adozioni.animali.model;
+//package it.adozioni.animali.model;
 
-public class Adottante {
-}
+//public class Adottante {
+//}
 
 
 
