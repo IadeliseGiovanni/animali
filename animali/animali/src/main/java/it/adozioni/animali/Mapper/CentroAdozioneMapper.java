@@ -43,4 +43,6 @@ public class CentroAdozioneMapper extends AbstractConverter<CentroAdozione, Cent
     public CentroAdozioneDto toDTO(CentroAdozione centroAdozione) {
         return null;
     }
+
+
 }
