@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CentroAdozioneRepository extends JpaRepository<CentroAdozione, Long> {
-    // Qui non devi scrivere nulla, fa tutto Spring Boot!
+
 }
