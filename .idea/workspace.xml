@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="Changes&#10;workspace.xml">
-      <change afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/dto/CentroAdozioneDto.java" afterDir="false" />
+    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="Changes&#10;CentroAdozioneDto.java&#10;workspace.xml">
+      <change afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/CentroAdozioneService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Repository/CentroAdozioneRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Repository/CentroAdozioneRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/dto/CentroAdozioneDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Dto/CentroAdozioneDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/dto/VisitaMedicaDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Dto/VisitaMedicaDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/model/CentroAdozione.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/CentroAdozione.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/model/VisitaMedica.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/VisitaMedica.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -60,24 +65,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Desktop/animali&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.AnimaliApplication.executor": "Run",
+    "git-widget-placeholder": "develop",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/user/Desktop/animali",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="AnimaliApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="animali" />
@@ -104,7 +110,8 @@
       <updated>1774860043911</updated>
       <workItem from="1774860045164" duration="4760000" />
       <workItem from="1774866354180" duration="502000" />
-      <workItem from="1774866895171" duration="1867000" />
+      <workItem from="1774866895171" duration="3211000" />
+      <workItem from="1774871617458" duration="1393000" />
     </task>
     <task id="LOCAL-00001" summary="modify">
       <option name="closed" value="true" />
@@ -130,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774867507139</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Changes&#10;CentroAdozioneDto.java&#10;workspace.xml">
+      <option name="closed" value="true" />
+      <created>1774868847436</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1774868847436</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +178,7 @@
     <MESSAGE value="modify" />
     <MESSAGE value="Changes&#10;application.properties&#10;CentroAdozione.java&#10;CentroAdozioneRepository.java&#10;workspace.xml" />
     <MESSAGE value="Changes&#10;workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;workspace.xml" />
+    <MESSAGE value="Changes&#10;CentroAdozioneDto.java&#10;workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;CentroAdozioneDto.java&#10;workspace.xml" />
   </component>
 </project>
