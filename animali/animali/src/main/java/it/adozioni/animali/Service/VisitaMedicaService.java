@@ -9,6 +9,9 @@ import it.adozioni.animali.Repository.VisitaMedicaRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class VisitaMedicaService extends AbstractService<VisitaMedica, VisitaMedicaDto> {
 
@@ -22,5 +25,27 @@ public class VisitaMedicaService extends AbstractService<VisitaMedica, VisitaMed
         this.visitaMedicaRepository = visitaMedicaRepository;
     }
 
+    public VisitaMedicaDto findByNome(String nome) {
+        return visitaMedicaMapper.toDTO(visitaMedicaRepository.findByNome(nome));
+    }
 
+    public List<VisitaMedicaDto> findByData(LocalDateTime data) {
+        return visitaMedicaMapper.toDTOList(visitaMedicaRepository.findByData(data));
+    }
+
+    public List<VisitaMedicaDto> findByEsito(String esito) {
+        return visitaMedicaMapper.toDTOList(visitaMedicaRepository.findByEsito(esito));
+    }
+
+    public List<VisitaMedicaDto> findByVeterinario(String veterinario) {
+        return visitaMedicaMapper.toDTOList(visitaMedicaRepository.findByVeterinario(veterinario));
+    }
+
+    public List<VisitaMedicaDto> findByDataAndVeterinario(LocalDateTime data, String veterinario) {
+        return visitaMedicaMapper.toDTOList(visitaMedicaRepository.findByDataAndVeterinario(data, veterinario));
+    }
+
+    public List<VisitaMedicaDto> findByDataAndEsito(LocalDateTime data, String esito) {
+        return visitaMedicaMapper.toDTOList(visitaMedicaRepository.findByDataAndEsito(data, esito));
+    }
 }
