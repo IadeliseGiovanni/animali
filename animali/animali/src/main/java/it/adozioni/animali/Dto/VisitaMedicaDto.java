@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class VisitaMedicaDto {
 
-    private String nome;
+    private Long id;
 
     private LocalDateTime data;
 

@@ -17,11 +17,6 @@ public class VisitaMedicaController extends AbstractController<VisitaMedicaDto> 
     @Autowired
     private VisitaMedicaService service;
 
-    @GetMapping("/findByNome")
-    public VisitaMedicaDto findByNome(@RequestParam("nome") String nome) {
-        return service.findByNome(nome);
-    }
-
     @GetMapping("/findByData")
     public List<VisitaMedicaDto> findByData(@RequestParam("data") LocalDateTime data) {
         return service.findByData(data);
@@ -33,4 +28,18 @@ public class VisitaMedicaController extends AbstractController<VisitaMedicaDto> 
     }
 
     @GetMapping("/findByVeterinario")
+    public List<VisitaMedicaDto> findByVeterinario(@RequestParam("veterinario") String veterinario) {
+        return service.findByVeterinario(veterinario);
+    }
+
+    @GetMapping("/findByDataAndVeterinario")
+    public List<VisitaMedicaDto> findByDataAndVeterinario(@RequestParam("data") LocalDateTime data, @RequestParam("veterinario") String veterinario) {
+        return service.findByDataAndVeterinario(data, veterinario);
+    }
+
+    @GetMapping("/findByDataAndEsito")
+    public List<VisitaMedicaDto> findByDataAndEsito(@RequestParam("data") LocalDateTime data, @RequestParam("esito") String esito) {
+        return service.findByDataAndEsito(data, esito);
+    }
+
 }

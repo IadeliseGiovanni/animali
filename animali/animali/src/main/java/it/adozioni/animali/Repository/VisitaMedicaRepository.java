@@ -8,9 +8,6 @@ import java.util.List;
 
 public interface VisitaMedicaRepository extends JpaRepository<VisitaMedica, Long> {
 
-
-    VisitaMedica findByNome(String nome);
-
     List<VisitaMedica> findByData(LocalDateTime data);
 
     List<VisitaMedica> findByEsito(String esito);

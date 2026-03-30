@@ -19,7 +19,7 @@ public class VisitaMedica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String nome;
+    private Long id;
 
     private LocalDateTime data;
 

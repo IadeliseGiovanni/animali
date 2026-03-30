@@ -25,10 +25,6 @@ public class VisitaMedicaService extends AbstractService<VisitaMedica, VisitaMed
         this.visitaMedicaRepository = visitaMedicaRepository;
     }
 
-    public VisitaMedicaDto findByNome(String nome) {
-        return visitaMedicaMapper.toDTO(visitaMedicaRepository.findByNome(nome));
-    }
-
     public List<VisitaMedicaDto> findByData(LocalDateTime data) {
         return visitaMedicaMapper.toDTOList(visitaMedicaRepository.findByData(data));
     }
@@ -48,4 +44,5 @@ public class VisitaMedicaService extends AbstractService<VisitaMedica, VisitaMed
     public List<VisitaMedicaDto> findByDataAndEsito(LocalDateTime data, String esito) {
         return visitaMedicaMapper.toDTOList(visitaMedicaRepository.findByDataAndEsito(data, esito));
     }
+
 }
