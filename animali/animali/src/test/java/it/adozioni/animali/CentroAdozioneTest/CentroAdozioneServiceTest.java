@@ -30,7 +30,7 @@ public class CentroAdozioneServiceTest {
         // GIVEN
         Integer id = 1;
         CentroAdozione entity = new CentroAdozione();
-        entity.setId(id);
+        entity.setId(Long.valueOf(id));
         when(repository.findById(id)).thenReturn(Optional.of(entity));
 
         // WHEN
