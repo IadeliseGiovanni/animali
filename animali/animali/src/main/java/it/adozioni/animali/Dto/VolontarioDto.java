@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class VolontarioDto {
 
-    private Long id;
+    private Integer id;
     private String nome;
     private String cognome;
     private String cf;
