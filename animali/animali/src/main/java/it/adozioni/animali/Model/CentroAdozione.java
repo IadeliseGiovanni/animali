@@ -32,5 +32,5 @@ public class CentroAdozione {
     // --- RELAZIONE 1 A N CON GLI ANIMALI ---
     // Il "mappedBy" deve corrispondere al nome del campo "centro" nella classe Animale
     @OneToMany(mappedBy = "centro", cascade = CascadeType.ALL)
-    private List<Animale> animaliOspitati;
+    private List<it.adozioni.animali.model.Animale> animaliOspitati;
 }

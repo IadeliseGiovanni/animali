@@ -22,7 +22,7 @@ public class Animale {
     private String genere;
     boolean isAdottato;
 
-
+    //relazione 1-n con VisitaMedica
     @OneToMany(mappedBy = "Animale")
     List<VisitaMedica> visiteMediche;
 }
