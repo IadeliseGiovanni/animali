@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/model/CentroAdozione.java" afterDir="false" />
+    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="modify">
+      <change afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Repository/CentroAdozioneRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/model/CentroAdozione.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/model/CentroAdozione.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +19,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -62,6 +66,7 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "git-widget-placeholder": "develop",
     "ignore.virus.scanning.warn.message": "true",
@@ -99,8 +104,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1774860043911</updated>
-      <workItem from="1774860045164" duration="3725000" />
+      <workItem from="1774860045164" duration="4760000" />
+      <workItem from="1774866354180" duration="502000" />
     </task>
+    <task id="LOCAL-00001" summary="modify">
+      <option name="closed" value="true" />
+      <created>1774865374530</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1774865374531</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,7 +132,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="develop" />
+                        <option value="GiovanniIadelise-CentroAdozione" />
                       </list>
                     </value>
                   </entry>
@@ -128,5 +143,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="modify" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify" />
   </component>
 </project>
