@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="Changes&#10;application.properties&#10;CentroAdozione.java&#10;CentroAdozioneRepository.java&#10;workspace.xml" />
+    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="Changes&#10;workspace.xml">
+      <change afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/dto/CentroAdozioneDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,7 +104,7 @@
       <updated>1774860043911</updated>
       <workItem from="1774860045164" duration="4760000" />
       <workItem from="1774866354180" duration="502000" />
-      <workItem from="1774866895171" duration="303000" />
+      <workItem from="1774866895171" duration="1867000" />
     </task>
     <task id="LOCAL-00001" summary="modify">
       <option name="closed" value="true" />
@@ -119,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774867168844</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Changes&#10;workspace.xml">
+      <option name="closed" value="true" />
+      <created>1774867507139</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1774867507139</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,7 +147,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="GiovanniIadelise-CentroAdozione" />
+                        <option value="develop" />
                       </list>
                     </value>
                   </entry>
@@ -151,6 +162,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="modify" />
     <MESSAGE value="Changes&#10;application.properties&#10;CentroAdozione.java&#10;CentroAdozioneRepository.java&#10;workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;application.properties&#10;CentroAdozione.java&#10;CentroAdozioneRepository.java&#10;workspace.xml" />
+    <MESSAGE value="Changes&#10;workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;workspace.xml" />
   </component>
 </project>
