@@ -33,7 +33,5 @@ public abstract class AbstractConverter<Entity,DTO> implements Converter<Entity,
         return list;
     }
 
-
-    public abstract CentroAdozioneDto toDto(CentroAdozione entity);
 }
 

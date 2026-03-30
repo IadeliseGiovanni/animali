@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="Changes&#10;Animale.java">
+    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="Changes&#10;CentroAdozioneRepository.java">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Mapper/CentroAdozioneMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Mapper/CentroAdozioneMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/Animale.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/Animale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/CentroAdozione.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/CentroAdozione.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +134,39 @@
       <option name="project" value="LOCAL" />
       <updated>1774873907659</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Changes&#10;Animale.java&#10;CentroAdozione.java&#10;CentroAdozioneMapper.java&#10;workspace.xml">
+      <option name="closed" value="true" />
+      <created>1774874566911</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1774874566911</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Changes&#10;AbstractConverter.java">
+      <option name="closed" value="true" />
+      <created>1774874619084</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1774874619084</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Changes&#10;CentroAdozioneMapper.java&#10;CentroAdozioneService.java">
+      <option name="closed" value="true" />
+      <created>1774874785877</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774874785877</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Changes&#10;CentroAdozioneRepository.java">
+      <option name="closed" value="true" />
+      <created>1774874824434</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774874824434</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,6 +201,10 @@
     <MESSAGE value="Changes&#10;Animale.java&#10;misc.xml&#10;workspace.xml&#10;Unversioned Files" />
     <MESSAGE value="Changes&#10;Changes&#10;Merge Conflicts&#10;misc.xml&#10;workspace.xml" />
     <MESSAGE value="Changes&#10;Animale.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;Animale.java" />
+    <MESSAGE value="Changes&#10;Animale.java&#10;CentroAdozione.java&#10;CentroAdozioneMapper.java&#10;workspace.xml" />
+    <MESSAGE value="Changes&#10;AbstractConverter.java" />
+    <MESSAGE value="Changes&#10;CentroAdozioneMapper.java&#10;CentroAdozioneService.java" />
+    <MESSAGE value="Changes&#10;CentroAdozioneRepository.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;CentroAdozioneRepository.java" />
   </component>
 </project>
