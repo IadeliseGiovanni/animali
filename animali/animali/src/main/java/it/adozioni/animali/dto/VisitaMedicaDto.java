@@ -1,6 +1,5 @@
-package it.adozioni.animali.model;
+package it.adozioni.animali.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,14 +9,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "VisitaMedica", schema = "Animali")
-public class VisitaMedica {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+public class VisitaMedicaDto {
     private String nome;
 
     private LocalDateTime data;
@@ -26,8 +20,5 @@ public class VisitaMedica {
 
     private String veterinario;
 
-    @ManyToOne
-    @JoinColumn(name = "animale_id", nullable = true)
     private Animale animale;
-
 }
