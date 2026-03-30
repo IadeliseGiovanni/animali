@@ -19,3 +19,4 @@ public class AnimaleMapper extends AbstractConverter<Animale,AnimaleDto> {
         return mapper.map(entity,AnimaleDto.class);
     }
 }
+//commento per commit
