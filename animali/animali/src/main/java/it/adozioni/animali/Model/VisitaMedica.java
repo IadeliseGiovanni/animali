@@ -1,4 +1,4 @@
-package it.adozioni.animali.model;
+package it.adozioni.animali.Model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

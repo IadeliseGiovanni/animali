@@ -1,6 +1,6 @@
 package it.adozioni.animali.Repository;
 
-import it.adozioni.animali.model.CentroAdozione;
+import it.adozioni.animali.Model.CentroAdozione;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

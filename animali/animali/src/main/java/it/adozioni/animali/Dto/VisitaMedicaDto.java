@@ -1,4 +1,4 @@
-package it.adozioni.animali.dto;
+package it.adozioni.animali.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
