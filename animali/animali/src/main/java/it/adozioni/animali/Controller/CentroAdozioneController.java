@@ -21,4 +21,13 @@ public class CentroAdozioneController {
     public List<CentroAdozioneDto> getAllCentri() {
         return (List<CentroAdozioneDto>) centroService.listaTuttiICentri();
     }
+
+    public List<CentroAdozioneDto> findByCitta(String citta) {
+    }
+
+    public List<CentroAdozioneDto> findByIsNoProfit(boolean noProfit) {
+    }
+
+    public CentroAdozioneDto findByNomeCentro(String nome) {
+    }
 }
