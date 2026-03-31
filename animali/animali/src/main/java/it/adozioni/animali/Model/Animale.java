@@ -2,7 +2,9 @@ package it.adozioni.animali.Model;
 
 import it.adozioni.animali.Model.VisitaMedica;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="Animale",schema="public")
 public class Animale {
     @Id

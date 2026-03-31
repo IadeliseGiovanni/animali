@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "centri_adozione", schema = "public") // ricordati di collegare il DB
+@Table(name = "adottante", schema = "public") // ricordati di collegare il DB
 public class Adottante {
 
     @Id
