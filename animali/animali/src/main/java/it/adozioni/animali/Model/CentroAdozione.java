@@ -29,9 +29,9 @@ public class CentroAdozione {
 
     private Boolean isNoProfit;
 
-    @OneToMany(mappedBy = "centro", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "centroAdozione", cascade = CascadeType.ALL)
     private List<Animale> animaliOspitati;
 
-    @OneToMany(mappedBy = "centro", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "centroAdozione", cascade = CascadeType.ALL)
     private List<Volontario> volontari;
 }
