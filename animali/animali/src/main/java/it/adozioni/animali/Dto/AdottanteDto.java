@@ -1,9 +1,12 @@
 package it.adozioni.animali.Dto;
 
+import it.adozioni.animali.Model.Animale;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,4 +20,6 @@ public class AdottanteDto {
     private String email;
     private String telefono;
     private Boolean isSchedato;
+    private List<Animale> animaliAdottati;
+
 }
