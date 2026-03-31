@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,18 +33,21 @@ public class AnimaleController extends AbstractController<AnimaleDto> {
 
     // 1. Lista di tutti gli animali (Restituisce DTO)
     @GetMapping("/lista")
+    @PreAuthorize("isAuthenticated()")
     public List<AnimaleDto> getAll() {
         return animaleService.findAll();
     }
 
     // 2. Cerca per nome (Restituisce DTO)
     @GetMapping("/cerca/{nome}")
+    @PreAuthorize("isAuthenticated()")
     public List<AnimaleDto> findByNome(@PathVariable String nome) {
         return animaleService.findByNome(nome);
     }
 
     // 3. IL CUORE DEL PROGETTO: Generazione del Contratto PDF
     @PostMapping("/genera-contratto")
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
     public ResponseEntity<byte[]> generaContratto(@RequestBody AdozioneRequestDto adozioneDto) {
 

@@ -8,6 +8,9 @@ import it.adozioni.animali.Model.Animale;
 import it.adozioni.animali.Repository.AdottanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +20,7 @@ import java.util.List;
 @Service
 
 
-public class AdottanteService extends AbstractService<Adottante, AdottanteDto> {
+public class AdottanteService extends AbstractService<Adottante, AdottanteDto> implements UserDetailsService {
 
     private final AdottanteRepository adottanteRepository;
     private final AdottanteMapper adottanteMapper;
@@ -31,6 +34,13 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> {
         super(repository, converter);
         this.adottanteRepository = adottanteRepository;
         this.adottanteMapper = adottanteMapper;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // Qui usiamo il metodo che abbiamo aggiunto al Repository
+        return adottanteRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato con email: " + email));
     }
 
     public List<AdottanteDto> findByCognome(String cognome) {

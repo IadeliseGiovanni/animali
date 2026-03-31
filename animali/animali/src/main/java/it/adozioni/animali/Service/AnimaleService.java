@@ -54,7 +54,7 @@ public class AnimaleService extends AbstractService<Animale, AnimaleDto> {
         return String.format(
                 "CERTIFICATO DI ADOZIONE\n" +
                         "--------------------------\n" +
-                        "Il sottoscritto %s %s, residente a %s,\n" +
+                        "Il sottoscritto %s %s,\n" +
                         "si impegna a prendersi cura dell'animale descritto di seguito.\n" +
                         "Testo Plain: L'animale dovrà essere trattato con cura e rispetto.\n\n" +
                         "DATI ANIMALE:\n" +
