@@ -32,10 +32,10 @@ public class Animale {
     @OneToMany(mappedBy = "animale")
     List<VisitaMedica> visiteMediche;
     @ManyToOne
-    @JoinColumn(name="adottante_id", nullable = true)
+    @JoinColumn(name="adottante_id" , nullable = true)
     private Adottante adottante;
     @ManyToOne
-    @JoinColumn(name = "centri_adozione_id")
+    @JoinColumn(name = "centri_adozione_id" , nullable = false)
     private CentroAdozione centroAdozione;
 
 }
