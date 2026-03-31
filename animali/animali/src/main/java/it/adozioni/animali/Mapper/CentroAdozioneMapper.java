@@ -22,9 +22,4 @@ public class CentroAdozioneMapper extends AbstractConverter<CentroAdozione, Cent
         return modelMapper.map(entity, CentroAdozioneDto.class);
     }
 
-    // 🔹 IMPORTANTE: Non restituire null, ma usa il modelMapper!
-    // Restituiamo CentroAdozioneDto invece di Object per aiutare il Service
-    public CentroAdozioneDto toDto(CentroAdozione entity) {
-        return toDTO(entity);
-    }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CentroAdozioneDto {
 
-    private Long id;
+    private Integer id;
 
     private String nomeCentro;
 
