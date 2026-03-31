@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 
-@Autowired
+@Autowired //add
 public class AdottanteService extends AbstractService<Adottante, AdottanteDto> {
 
     private final AdottanteRepository adottanteRepository;

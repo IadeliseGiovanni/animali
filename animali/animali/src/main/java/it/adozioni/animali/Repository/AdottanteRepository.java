@@ -20,3 +20,4 @@ public interface AdottanteRepository extends JpaRepository<Adottante, Integer> {
 
 }
 
+//commento inutile
