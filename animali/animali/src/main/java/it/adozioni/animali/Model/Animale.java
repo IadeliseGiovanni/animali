@@ -24,7 +24,7 @@ public class Animale {
     private String razza;
     private int eta;
     private String genere;
-    boolean isAdottato;
+    boolean adottato;
     private String microchip ;
 
     //relazione 1-n con VisitaMedica
