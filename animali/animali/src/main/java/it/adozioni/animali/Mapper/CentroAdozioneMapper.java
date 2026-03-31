@@ -6,20 +6,25 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-
-public class CentroAdozioneMapper extends AbstractConverter<CentroAdozione, CentroAdozioneDto>  {
+public class CentroAdozioneMapper extends AbstractConverter<CentroAdozione, CentroAdozioneDto> {
 
     private final ModelMapper modelMapper = new ModelMapper();
 
-    // Converte le liste (necessario per il Service)
     @Override
     public CentroAdozione toEntity(CentroAdozioneDto dto) {
-        return modelMapper.map(dto,CentroAdozione.class);
+        if (dto == null) return null;
+        return modelMapper.map(dto, CentroAdozione.class);
     }
 
     @Override
     public CentroAdozioneDto toDTO(CentroAdozione entity) {
-        return modelMapper.map(entity,CentroAdozioneDto.class);
+        if (entity == null) return null;
+        return modelMapper.map(entity, CentroAdozioneDto.class);
     }
 
+    // 🔹 IMPORTANTE: Non restituire null, ma usa il modelMapper!
+    // Restituiamo CentroAdozioneDto invece di Object per aiutare il Service
+    public CentroAdozioneDto toDto(CentroAdozione entity) {
+        return toDTO(entity);
     }
+}
