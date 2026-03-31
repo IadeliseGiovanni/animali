@@ -15,12 +15,13 @@ import java.util.List;
 
 @Service
 
-@Autowired //add
+
 public class AdottanteService extends AbstractService<Adottante, AdottanteDto> {
 
     private final AdottanteRepository adottanteRepository;
     private final AdottanteMapper adottanteMapper;
 
+    @Autowired
     protected AdottanteService(JpaRepository<Adottante, Integer> repository,
                                Converter<Adottante, AdottanteDto> converter,
                                AdottanteMapper adottanteMapper,
