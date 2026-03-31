@@ -31,4 +31,7 @@ public class CentroAdozione {
 
     @OneToMany(mappedBy = "centro", cascade = CascadeType.ALL)
     private List<Animale> animaliOspitati;
+
+    @OneToMany(mappedBy = "centro", cascade = CascadeType.ALL)
+    private List<Volontario> volontari;
 }
