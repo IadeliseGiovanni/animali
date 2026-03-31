@@ -5,12 +5,17 @@ import it.adozioni.animali.Mapper.AdottanteMapper;
 import it.adozioni.animali.Mapper.Converter;
 import it.adozioni.animali.Model.Adottante;
 import it.adozioni.animali.Repository.AdottanteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+
 @Service
+
+@Autowired
 public class AdottanteService extends AbstractService<Adottante, AdottanteDto> {
 
     private final AdottanteRepository adottanteRepository;

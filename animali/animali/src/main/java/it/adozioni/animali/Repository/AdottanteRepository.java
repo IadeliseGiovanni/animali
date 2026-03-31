@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AdottanteRepository extends JpaRepository<Adottante, Long> {
+public interface AdottanteRepository extends JpaRepository<Adottante, Integer> {
 
     List<Adottante> findByNome(String nome);
 
