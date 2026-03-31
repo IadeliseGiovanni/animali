@@ -26,14 +26,14 @@ public class CentroAdozioneService extends AbstractService<CentroAdozione, Centr
     // Restituisce DTO (per il Controller)
     public List<CentroAdozioneDto> findByCitta(String citta) {
         return repository.findByCitta(citta).stream()
-                .map(entity -> (CentroAdozioneDto) mapper.toDto(entity)) // Cast aggiunto qui
+                .map(entity -> (CentroAdozioneDto) mapper.toDTO(entity)) // Cast aggiunto qui
                 .collect(Collectors.toList());
     }
 
     // Restituisce DTO (per il Controller)
     public List<CentroAdozioneDto> findByIsNoProfit(boolean noProfit) {
         return repository.findByIsNoProfit(noProfit).stream()
-                .map(entity -> (CentroAdozioneDto) mapper.toDto(entity)) // Cast aggiunto qui
+                .map(entity -> (CentroAdozioneDto) mapper.toDTO(entity)) // Cast aggiunto qui
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +44,7 @@ public class CentroAdozioneService extends AbstractService<CentroAdozione, Centr
         if (entities == null || entities.isEmpty()) {
             return null;
         }
-        return (CentroAdozioneDto) mapper.toDto(entities.get(0)); // Cast aggiunto qui
+        return (CentroAdozioneDto) mapper.toDTO(entities.get(0)); // Cast aggiunto qui
     }
 
     // Metodi che restituiscono Entity (utili per i Service o i Test interni)
