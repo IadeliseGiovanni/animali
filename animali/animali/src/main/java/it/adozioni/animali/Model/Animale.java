@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="Animale",schema="public")
+@Table(name="animale",schema="public")
 public class Animale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Animale {
     @JoinColumn(name="adottante_id", nullable = true)
     private Adottante adottante;
     @ManyToOne
-    @JoinColumn(name = "centroAdozione_id")
+    @JoinColumn(name = "centri_adozione_id")
     private CentroAdozione centroAdozione;
 
 
