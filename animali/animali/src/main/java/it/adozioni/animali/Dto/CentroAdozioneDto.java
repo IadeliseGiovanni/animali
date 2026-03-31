@@ -1,9 +1,13 @@
 package it.adozioni.animali.Dto;
 
+import it.adozioni.animali.Model.Animale;
+import it.adozioni.animali.Model.Volontario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,7 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CentroAdozioneDto {
 
-    // 🔹 AGGIUNGI QUESTA RIGA QUI SOTTO
     private Long id;
 
     private String nomeCentro;
@@ -23,4 +26,8 @@ public class CentroAdozioneDto {
     private Integer capacitaMassima;
 
     private Boolean isNoProfit;
+
+    private List<Animale> animaliOspitati;
+
+    private List<Volontario> volontari;
 }
