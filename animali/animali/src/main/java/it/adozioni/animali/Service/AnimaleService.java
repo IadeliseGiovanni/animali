@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AnimaleService extends AbstractService<Animale, AnimaleDto>{
@@ -88,5 +89,13 @@ public class AnimaleService extends AbstractService<Animale, AnimaleDto>{
     public List<AnimaleDto> findAnimaliConMolteVisite(int minVisite) {
         // Esattamente come gli altri: chiamo il repo e passo il risultato al mapper
         return animaleMapper.toDTOList(animaleRepository.findAnimaliConMolteVisite(minVisite));
+    }
+
+    public List<AnimaleDto> findAll(){
+        return animaleMapper.toDTOList(animaleRepository.findAll());
+    }
+
+    public Animale findByIdEntity(Integer id) {
+        return animaleRepository.findById(id).orElse(new Animale());
     }
 }

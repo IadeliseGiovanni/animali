@@ -32,7 +32,7 @@ public class AnimaleController {
     // 1. Lista di tutti gli animali (Restituisce DTO)
     @GetMapping("/lista")
     public List<AnimaleDto> getAll() {
-        return animaleService.findAllDto();
+        return animaleService.findAll();
     }
 
     // 2. Cerca per nome (Restituisce DTO)

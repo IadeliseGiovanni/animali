@@ -4,6 +4,7 @@ import it.adozioni.animali.Dto.AdottanteDto;
 import it.adozioni.animali.Mapper.AdottanteMapper;
 import it.adozioni.animali.Mapper.Converter;
 import it.adozioni.animali.Model.Adottante;
+import it.adozioni.animali.Model.Animale;
 import it.adozioni.animali.Repository.AdottanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,6 +35,10 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> {
 
     public List<AdottanteDto> findByCognome(String cognome) {
         return adottanteMapper.toDTOList(adottanteRepository.findByCognome(cognome));
+    }
+
+    public Adottante findByIdEntity(Integer id) {
+        return adottanteRepository.findById(id).orElse(new Adottante());
     }
 
 }
