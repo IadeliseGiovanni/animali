@@ -61,7 +61,7 @@ public class AnimaleService extends AbstractService<Animale, AnimaleDto>{
                 adottante.getNome(), adottante.getCognome()
         );
     }
-    List<AnimaleDto> findByNome(String nome){
+    public List<AnimaleDto> findByNome(String nome){
         return animaleMapper.toDTOList(animaleRepository.findByNome(nome));
     }
     List<AnimaleDto>findByRazza(String razza){
