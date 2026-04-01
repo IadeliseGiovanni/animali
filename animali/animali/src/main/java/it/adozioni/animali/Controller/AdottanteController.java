@@ -1,4 +1,3 @@
-
 package it.adozioni.animali.Controller;
 
 import it.adozioni.animali.Dto.AdottanteDto;
@@ -16,8 +15,13 @@ public class AdottanteController extends AbstractController<AdottanteDto> {
     @Autowired
     private AdottanteService service;
 
+    /**
+     * Ricerca per cognome.
+     * URL su Postman: GET http://localhost:8080/Adottante/findByCognome?cognome=Rossi
+     * Ricorda di inserire il Bearer Token nell'Authorization!
+     */
     @GetMapping("/findByCognome")
-    public List<AdottanteDto> findByCognome(String cognome) {
+    public List<AdottanteDto> findByCognome(@RequestParam("cognome") String cognome) {
         return service.findByCognome(cognome);
     }
 

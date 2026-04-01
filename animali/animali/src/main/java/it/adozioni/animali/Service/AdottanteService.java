@@ -2,72 +2,68 @@ package it.adozioni.animali.Service;
 
 import it.adozioni.animali.Dto.AdottanteDto;
 import it.adozioni.animali.Mapper.AdottanteMapper;
-import it.adozioni.animali.Mapper.Converter;
 import it.adozioni.animali.Model.Adottante;
-import it.adozioni.animali.Model.Animale;
 import it.adozioni.animali.Repository.AdottanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
-
 @Service
-
-
 public class AdottanteService extends AbstractService<Adottante, AdottanteDto> implements UserDetailsService {
 
     private final AdottanteRepository adottanteRepository;
     private final AdottanteMapper adottanteMapper;
-    private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired //add
-    protected AdottanteService(JpaRepository<Adottante, Integer> repository,
-                               Converter<Adottante, AdottanteDto> converter,
+    @Autowired
+    protected AdottanteService(AdottanteRepository adottanteRepository,
                                AdottanteMapper adottanteMapper,
-                               AdottanteRepository adottanteRepository, org.springframework.security.crypto.password.PasswordEncoder passwordEncoder) {
-
-        super(repository, converter);
+                               @Lazy PasswordEncoder passwordEncoder) {
+        super(adottanteRepository, adottanteMapper);
         this.adottanteRepository = adottanteRepository;
         this.adottanteMapper = adottanteMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
-    // Metodo per la registrazione
-    public AdottanteDto registra(AdottanteDto dto) {
-        // Trasformi il DTO in Entity
-        Adottante entity = adottanteMapper.toEntity(dto);
-
-        // Prendi la password dal DTO (assicurati che AdottanteDto abbia getPassword())
-        String passwordInChiaro = dto.getPassword();
-
-        // La cripti usando il bean passwordEncoder
-        String passwordCriptata = passwordEncoder.encode(passwordInChiaro);
-
-        // La salvi nell'entity (assicurati che Adottante abbia setPassword())
-        entity.setPassword(passwordCriptata);
-
-        return adottanteMapper.toDTO(adottanteRepository.save(entity));
-    }
-
+    // Metodo richiesto da Spring Security per l'autenticazione JWT
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // Qui usiamo il metodo che abbiamo aggiunto al Repository
         return adottanteRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato con email: " + email));
     }
 
-    public List<AdottanteDto> findByCognome(String cognome) {
-        return adottanteMapper.toDTOList(adottanteRepository.findByCognome(cognome));
+    public AdottanteDto registra(AdottanteDto dto) {
+        // 1. Mappa il DTO in Entity (la password è ancora quella in chiaro di Postman)
+        Adottante entity = adottanteMapper.toEntity(dto);
+
+        // 2. Cripta la password prima del salvataggio
+        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
+            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+
+        // 3. Imposta i campi di default
+        if (entity.getRuolo() == null || entity.getRuolo().isEmpty()) {
+            entity.setRuolo("USER");
+        }
+        entity.setIsSchedato(false);
+
+        // 4. Salva nel database e restituisce il DTO
+        Adottante salvato = adottanteRepository.save(entity);
+        return adottanteMapper.toDTO(salvato);
     }
 
     public Adottante findByIdEntity(Integer id) {
-        return adottanteRepository.findById(id).orElse(new Adottante());
+        return adottanteRepository.findById(id).orElse(null);
     }
 
+    public List<AdottanteDto> findByCognome(String cognome) {
+        List<Adottante> listaEntity = adottanteRepository.findByCognome(cognome);
+        return adottanteMapper.toDTOList(listaEntity);
+    }
 }

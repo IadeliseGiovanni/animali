@@ -1,9 +1,7 @@
 package it.adozioni.animali.Mapper;
 
 import it.adozioni.animali.Dto.AdottanteDto;
-import it.adozioni.animali.Dto.CentroAdozioneDto;
 import it.adozioni.animali.Model.Adottante;
-import it.adozioni.animali.Model.CentroAdozione;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -14,12 +12,16 @@ public class AdottanteMapper extends AbstractConverter<Adottante, AdottanteDto> 
 
     @Override
     public AdottanteDto toDTO(Adottante entity) {
-        return mapper.map(entity, AdottanteDto.class);
+        if (entity == null) return null;
+        AdottanteDto dto = mapper.map(entity, AdottanteDto.class);
+        // Opzionale: per sicurezza non restituiamo mai la password nel DTO verso il client
+        dto.setPassword(null);
+        return dto;
     }
 
     @Override
     public Adottante toEntity(AdottanteDto dto) {
+        if (dto == null) return null;
         return mapper.map(dto, Adottante.class);
     }
-
 }
