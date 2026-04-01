@@ -16,27 +16,35 @@ public class AnimaleService extends AbstractService<Animale, AnimaleDto> {
 
     @Autowired
     public AnimaleService(AnimaleRepository animaleRepository, AnimaleMapper animaleMapper) {
-        // Passiamo i parametri al costruttore della classe astratta padre
         super(animaleRepository, animaleMapper);
         this.animaleRepository = animaleRepository;
         this.animaleMapper = animaleMapper;
     }
 
-    /**
-     * Recupera l'oggetto Animale (Entity) direttamente dal database.
-     * Necessario per la generazione del contratto PDF nel controller.
-     */
+    // Fondamentale: accetta Integer per coerenza con il DB e i Model
     public Animale findByIdEntity(Integer id) {
-        // .orElse(null) evita errori se l'ID non esiste nel DB
-        return animaleRepository.findById(id).orElse(null);
+        if (id == null) {
+            System.err.println("SERVICE LOG: L'ID ricevuto è NULL!");
+            return null;
+        }
+
+        System.out.println("SERVICE LOG: Cerco nel Database l'animale con ID: " + id);
+
+        Animale trovato = animaleRepository.findById(id).orElse(null);
+
+        if (trovato == null) {
+            System.err.println("SERVICE LOG: Nessun animale trovato in PostgreSQL con ID: " + id);
+        } else {
+            System.out.println("SERVICE LOG: Animale trovato! Nome: " + trovato.getNome());
+        }
+
+        return trovato;
     }
 
-    // Metodo per cercare animali per nome
     public List<AnimaleDto> findByNome(String nome) {
         return animaleMapper.toDTOList(animaleRepository.findByNome(nome));
     }
 
-    // Metodo per ottenere la lista completa in formato DTO
     public List<AnimaleDto> findAll() {
         return animaleMapper.toDTOList(animaleRepository.findAll());
     }

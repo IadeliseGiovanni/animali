@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 
 @Getter
@@ -20,10 +19,12 @@ public class AnimaleDto {
     private String specie;
     private String razza;
     private int eta;
-    boolean isAdottato;
+
+    // Cambiato da isAdottato a adottato per coerenza totale
+    private boolean adottato;
+
     private List<VisitaMedica> visiteMediche;
     private Adottante adottante;
     private CentroAdozione centroAdozione;
     private String microchip;
-
 }

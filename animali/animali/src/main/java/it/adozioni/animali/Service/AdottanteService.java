@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,43 +23,61 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    protected AdottanteService(AdottanteRepository adottanteRepository,
-                               AdottanteMapper adottanteMapper,
-                               @Lazy PasswordEncoder passwordEncoder) {
+    public AdottanteService(AdottanteRepository adottanteRepository,
+                            AdottanteMapper adottanteMapper,
+                            @Lazy PasswordEncoder passwordEncoder) {
         super(adottanteRepository, adottanteMapper);
         this.adottanteRepository = adottanteRepository;
         this.adottanteMapper = adottanteMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
-    // Metodo richiesto da Spring Security per l'autenticazione JWT
+    /**
+     * Metodo fondamentale per Spring Security: recupera l'utente dal DB tramite email.
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return adottanteRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato con email: " + email));
     }
 
+    /**
+     * Registra un nuovo utente criptando la password.
+     */
+    @Transactional
     public AdottanteDto registra(AdottanteDto dto) {
-        // 1. Mappa il DTO in Entity (la password è ancora quella in chiaro di Postman)
+        // 1. Mappatura DTO -> Entity
         Adottante entity = adottanteMapper.toEntity(dto);
 
-        // 2. Cripta la password prima del salvataggio
-        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
-            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        // 2. Criptazione Password (BCrypt)
+        // Se la password non c'è nel DTO (magari dimenticata su Postman), lanciamo errore
+        if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
+            throw new RuntimeException("La password è obbligatoria per la registrazione!");
         }
 
-        // 3. Imposta i campi di default
+        String passwordCriptata = passwordEncoder.encode(dto.getPassword());
+        entity.setPassword(passwordCriptata);
+
+        // 3. Setup campi di default (Admin o User)
         if (entity.getRuolo() == null || entity.getRuolo().isEmpty()) {
             entity.setRuolo("USER");
         }
+
+        // Un nuovo utente non è mai schedato (bloccato) di default
         entity.setIsSchedato(false);
 
-        // 4. Salva nel database e restituisce il DTO
+        // 4. Salvataggio e ritorno del DTO (senza password nel ritorno per sicurezza)
         Adottante salvato = adottanteRepository.save(entity);
+        System.out.println("DEBUG: Utente registrato con successo: " + salvato.getEmail());
+
         return adottanteMapper.toDTO(salvato);
     }
 
+    /**
+     * Metodo usato dal Controller per recuperare l'oggetto Adottante reale
+     */
     public Adottante findByIdEntity(Integer id) {
+        if (id == null) return null;
         return adottanteRepository.findById(id).orElse(null);
     }
 

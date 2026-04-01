@@ -7,10 +7,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 public class ApplicationConfig {
@@ -23,20 +23,19 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        // La Lambda corretta non vuole il tipo "String" esplicito prima del nome variabile
+        // La Lambda recupera l'utente dal database tramite email
         return username -> repository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato con email: " + username));
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        // 1. Costruttore vuoto (risolve l'errore "cannot be applied to given types")
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        // 2. Metodo corretto: setUserDetailsService (senza la 's' di troppo)
-        authProvider.setUserDetailsService(userDetailsService());
+        // Usiamo this.userDetailsService() per puntare chiaramente al Bean sopra
+        authProvider.setUserDetailsService(this.userDetailsService());
 
-        // 3. Configura l'encoder per BCrypt
+        // Impostiamo l'encoder per la verifica delle password hashate
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;

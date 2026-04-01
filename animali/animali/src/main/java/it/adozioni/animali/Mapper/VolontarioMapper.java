@@ -1,5 +1,6 @@
 package it.adozioni.animali.Mapper;
 
+import it.adozioni.animali.Dto.CentroAdozioneDto;
 import it.adozioni.animali.Model.Volontario;
 import it.adozioni.animali.Dto.VolontarioDto;
 import org.modelmapper.ModelMapper;
