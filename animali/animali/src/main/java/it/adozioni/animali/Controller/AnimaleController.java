@@ -6,17 +6,17 @@ import it.adozioni.animali.Model.Animale;
 import it.adozioni.animali.Service.AdottanteService;
 import it.adozioni.animali.Service.AnimaleService;
 import it.adozioni.animali.Service.DocumentoService;
+import it.adozioni.animali.Service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/animali")
+@CrossOrigin("*")
 public class AnimaleController {
 
     @Autowired
@@ -28,50 +28,54 @@ public class AnimaleController {
     @Autowired
     private DocumentoService documentoService;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/genera-contratto")
-    @PreAuthorize("hasRole('ADMIN')")
-    @Transactional(readOnly = true)
     public ResponseEntity<?> generaContratto(@RequestBody AdozioneRequestDto adozioneDto) {
 
-        // LOG DI CONTROLLO: Vedrai questi dati nella console di IntelliJ
-        System.out.println("--- INIZIO GENERAZIONE CONTRATTO ---");
-        System.out.println("Ricerca Animale ID: " + adozioneDto.getIdAnimale());
-        System.out.println("Ricerca Adottante ID: " + adozioneDto.getIdAdottante());
+        System.out.println("--- INIZIO PROCESSO CONTRATTUALE ---");
 
-        // Recupero delle entità tramite i Service
+        // 1. Recupero entità dal DB
         Animale animale = animaleService.findByIdEntity(adozioneDto.getIdAnimale());
         Adottante adottante = adottanteService.findByIdEntity(adozioneDto.getIdAdottante());
 
-        // VERIFICA PUNTUALE: Ti dice esattamente cosa manca
-        if (animale == null) {
-            System.err.println("ERRORE: Animale con ID " + adozioneDto.getIdAnimale() + " non trovato nel database!");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Errore: Animale non trovato.");
-        }
-
-        if (adottante == null) {
-            System.err.println("ERRORE: Adottante con ID " + adozioneDto.getIdAdottante() + " non trovato nel database!");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Errore: Adottante non trovato.");
+        // 2. Validazione esistenza
+        if (animale == null || adottante == null) {
+            System.err.println("ERRORE: ID non trovati nel database.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Errore: Animale o Adottante non esistente.");
         }
 
         try {
-            // Se arriviamo qui, entrambi esistono!
-            System.out.println("SUCCESSO: Entità trovate. Avvio creazione PDF per " + animale.getNome());
-
+            // 3. Creazione del PDF
+            System.out.println("LOG: Generazione PDF per " + animale.getNome() + "...");
             byte[] pdf = documentoService.creaPdf(animale, adottante);
 
+            // 4. INVIO EMAIL (PROTETTO DA TRY-CATCH LOCALE)
+            // Questo blocco evita che l'errore di autenticazione email blocchi il PDF
+            try {
+                if (adottante.getEmail() != null && !adottante.getEmail().isEmpty()) {
+                    System.out.println("LOG: Tentativo invio email a " + adottante.getEmail());
+                    emailService.inviaContrattoConAllegato(adottante.getEmail(), animale.getNome(), pdf);
+                }
+            } catch (Exception mailException) {
+                // Se la mail fallisce, logghiamo l'errore ma procediamo con la restituzione del PDF
+                System.err.println("AVVISO: Invio email fallito (Authentication Error), ma procedo con il download.");
+            }
+
+            // 5. Configurazione Header per il download del file
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
-            // Pulisce il nome dell'animale per il nome del file
-            String nomeFile = "contratto_" + (animale.getNome() != null ? animale.getNome() : "adozione") + ".pdf";
-            headers.setContentDispositionFormData("attachment", nomeFile);
-            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            String fileName = "Contratto_Adozione_" + animale.getNome() + ".pdf";
+            headers.setContentDispositionFormData("attachment", fileName);
 
+            System.out.println("--- SUCCESSO: Contratto inviato alla risposta HTTP ---");
             return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
 
         } catch (Exception e) {
-            System.err.println("ERRORE CRITICO GENERAZIONE PDF: " + e.getMessage());
+            System.err.println("ERRORE CRITICO SISTEMA: " + e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore interno nel generare il file.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore tecnico nella generazione del contratto.");
         }
     }
 }
