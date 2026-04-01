@@ -5,42 +5,61 @@ import it.adozioni.animali.Dto.LoginRequest;
 import it.adozioni.animali.Service.AdottanteService;
 import it.adozioni.animali.Service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Profile("!dev")
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AdottanteService adottanteService;
-    private final JwtService jwtService;
+    @Autowired
+    private AdottanteService adottanteService;
 
     @Autowired
-    public AuthController(AdottanteService adottanteService, JwtService jwtService) {
-        this.adottanteService = adottanteService;
-        this.jwtService = jwtService;
-    }
+    private JwtService jwtService;
 
-    // Endpoint per la registrazione: POST http://localhost:8080/api/auth/register
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @PostMapping("/register")
     public ResponseEntity<AdottanteDto> register(@RequestBody AdottanteDto dto) {
-        // Chiamiamo il metodo 'registra' che abbiamo creato nel Service
-        AdottanteDto nuovoUtente = adottanteService.registra(dto);
-        return ResponseEntity.ok(nuovoUtente);
+        System.out.println("DEBUG: Ricevuta richiesta di registrazione per " + dto.getEmail());
+        return ResponseEntity.ok(adottanteService.registra(dto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
-        // 1. Autentica l'utente (usa AuthenticationManager)
-        // 2. Se OK, genera il token
-        UserDetails user = adottanteService.loadUserByUsername(request.getEmail());
-        String token = jwtService.generateToken(user);
-        return ResponseEntity.ok(token);
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        try {
+            System.out.println("--- DEBUG LOGIN START ---");
+            System.out.println("Email ricevuta: " + request.getEmail());
+            System.out.println("Password ricevuta: " + request.getPassword());
+
+            // Tentativo di autenticazione
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            );
+
+            System.out.println("DEBUG: Autenticazione riuscita per " + request.getEmail());
+
+            UserDetails user = adottanteService.loadUserByUsername(request.getEmail());
+            String token = jwtService.generateToken(user);
+
+            System.out.println("DEBUG: Token generato con successo!");
+            return ResponseEntity.ok(token);
+
+        } catch (BadCredentialsException e) {
+            System.err.println("DEBUG ERROR: Password sbagliata o utente non trovato!");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Errore: Email o Password errati.");
+
+        } catch (Exception e) {
+            System.err.println("DEBUG ERROR: Errore generico durante il login: " + e.getMessage());
+            e.printStackTrace(); // Questo stampa tutto l'errore rosso in console
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Errore login: " + e.getMessage());
+        }
     }
 }
