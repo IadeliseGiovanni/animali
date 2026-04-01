@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-// 🔹 CAMBIATO: Da Long a Integer per combaciare con l'AbstractService
+
 public interface CentroAdozioneRepository extends JpaRepository<CentroAdozione, Integer> {
 
     // 1 - Cerca per nome del centro
