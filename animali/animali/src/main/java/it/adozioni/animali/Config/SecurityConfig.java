@@ -1,7 +1,9 @@
 package it.adozioni.animali.Config;
 
+import it.adozioni.animali.Config.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,15 +25,29 @@ public class SecurityConfig {
         this.authenticationProvider = authenticationProvider;
     }
 
+    // CONFIGURAZIONE PER I TEST (Profilo "test")
     @Bean
+    @Profile("test")
+    public SecurityFilterChain securityFilterChainTest(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll() // Permette tutto durante i test
+                );
+        // Nota: non aggiungiamo i filtri JWT per semplificare il test dei metodi
+        return http.build();
+    }
+
+    // CONFIGURAZIONE STANDARD (Attiva se NON siamo in profilo "test")
+    @Bean
+    @Profile("!test")
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        // MODIFICATO: Ora chiunque può chiamare questa rotta per test
-                        .requestMatchers("/api/animali/genera-contratto").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)
