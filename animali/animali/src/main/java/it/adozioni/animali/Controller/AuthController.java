@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -20,75 +19,44 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin("*")
 public class AuthController {
 
     @Autowired
     private AdottanteService adottanteService;
-
     @Autowired
     private VolontarioService volontarioService;
-
     @Autowired
     private JwtService jwtService;
-
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @PostMapping("/register/adottante")
-    public ResponseEntity<?> register(@RequestBody AdottanteDto dto) {
-        try {
-            System.out.println("DEBUG: Tentativo di registrazione per " + dto.getEmail());
-            AdottanteDto nuovoUtente = adottanteService.registra(dto);
-            return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
-        } catch (Exception e) {
-            System.err.println("DEBUG ERROR: Errore registrazione: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Errore: Email già esistente o dati non validi.");
-        }
-    }
-
-    @PostMapping("/register/volontario")
-    public ResponseEntity<?> registerVolontario(@RequestBody VolontarioDto dto) {
-        try {
-            System.out.println("DEBUG: Registrazione Volontario per " + dto.getEmail());
-            // Usa il metodo registra che abbiamo appena sistemato nel VolontarioService
-            VolontarioDto nuovoVolontario = volontarioService.registra(dto);
-            return new ResponseEntity<>(nuovoVolontario, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Errore registrazione volontario: " + e.getMessage());
-        }
-    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
-            System.out.println("--- DEBUG LOGIN START ---");
-            System.out.println("Email ricevuta: " + request.getEmail());
-
-            // 1. L'AuthenticationManager usa il BCryptPasswordEncoder (da ApplicationConfig)
-            // per confrontare la password di Postman con l'hash nel DB.
+            // Verifica credenziali (usa BCrypt internamente)
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
             );
 
-            System.out.println("DEBUG: Autenticazione riuscita per " + request.getEmail());
-
-            // 2. Carichiamo l'utente e generiamo il Token
             UserDetails user = adottanteService.loadUserByUsername(request.getEmail());
             String token = jwtService.generateToken(user);
 
-            // Restituiamo un JSON pulito con il token
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
-
-            System.out.println("DEBUG: Token inviato a Postman!");
             return ResponseEntity.ok(response);
 
-        } catch (BadCredentialsException e) {
-            System.err.println("DEBUG ERROR: Password sbagliata o hash non corrispondente!");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Errore: Credenziali non valide.");
         } catch (Exception e) {
-            System.err.println("DEBUG ERROR: Errore imprevisto: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore server.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenziali non valide.");
+        }
+    }
+
+    @PostMapping("/register/adottante")
+    public ResponseEntity<?> register(@RequestBody AdottanteDto dto) {
+        try {
+            return new ResponseEntity<>(adottanteService.registra(dto), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Errore: " + e.getMessage());
         }
     }
 }

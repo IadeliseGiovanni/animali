@@ -1,6 +1,5 @@
 package it.adozioni.animali.Config;
 
-import it.adozioni.animali.Config.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -25,30 +24,17 @@ public class SecurityConfig {
         this.authenticationProvider = authenticationProvider;
     }
 
-    // CONFIGURAZIONE PER I TEST (Profilo "test")
-    @Bean
-    @Profile("test")
-    public SecurityFilterChain securityFilterChainTest(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // Permette tutto durante i test
-                );
-        // Nota: non aggiungiamo i filtri JWT per semplificare il test dei metodi
-        return http.build();
-    }
-
-    // CONFIGURAZIONE STANDARD (Attiva se NON siamo in profilo "test")
     @Bean
     @Profile("!test")
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configure(http)) // Abilita comunicazione con Angular
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/auth/**").permitAll() // Login e Register liberi
+                        .requestMatchers("/error").permitAll()       // Gestione errori libera
+                        .anyRequest().authenticated()                // Tutto il resto protetto
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
