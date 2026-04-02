@@ -2,6 +2,7 @@ package it.adozioni.animali.AnimaliTest;
 
 import it.adozioni.animali.Controller.AnimaleController;
 import it.adozioni.animali.Dto.AdozioneRequestDto;
+import it.adozioni.animali.Dto.ResultDto;
 import it.adozioni.animali.Model.Adottante;
 import it.adozioni.animali.Model.Animale;
 import it.adozioni.animali.Service.AdottanteService;
@@ -36,10 +37,9 @@ public class AnimaleControllerTest {
     @InjectMocks
     private AnimaleController controller;
 
-    // 🔹 TEST 1 - CASO OK (tutto funziona)
+    // 🔹 TEST 1 - CASO OK
     @Test
     void testGeneraContratto_OK() throws Exception {
-
         // GIVEN
         AdozioneRequestDto dto = new AdozioneRequestDto();
         dto.setIdAnimale(1);
@@ -66,7 +66,6 @@ public class AnimaleControllerTest {
 
         verify(emailService).inviaContrattoConAllegato(
                 adottante.getEmail(), animale.getNome(), pdf);
-
         verify(emailService).inviaNotificaRicezioneAlCentro(
                 adottante.getEmail(), animale.getNome());
     }
@@ -74,7 +73,6 @@ public class AnimaleControllerTest {
     // 🔹 TEST 2 - CASO NOT FOUND
     @Test
     void testGeneraContratto_NotFound() {
-
         // GIVEN
         AdozioneRequestDto dto = new AdozioneRequestDto();
         dto.setIdAnimale(1);
@@ -87,13 +85,18 @@ public class AnimaleControllerTest {
 
         // THEN
         assertThat(response.getStatusCode().value()).isEqualTo(404);
-        assertThat(response.getBody()).isEqualTo("Errore: Dati non trovati.");
+
+        assertThat(response.getBody()).isInstanceOf(ResultDto.class);
+        ResultDto<?> body = (ResultDto<?>) response.getBody();
+        assertThat(body).isNotNull();
+        // Corretta la stringa in base al tuo log
+        assertThat(body.getMessage()).isEqualTo("Errore: Animale o Adottante non trovati nel database.");
+        assertThat(body.isSuccess()).isFalse();
     }
 
     // 🔹 TEST 3 - CASO ERRORE (exception)
     @Test
     void testGeneraContratto_Exception() throws Exception {
-
         // GIVEN
         AdozioneRequestDto dto = new AdozioneRequestDto();
         dto.setIdAnimale(1);
@@ -113,7 +116,12 @@ public class AnimaleControllerTest {
 
         // THEN
         assertThat(response.getStatusCode().value()).isEqualTo(500);
-        assertThat(response.getBody())
-                .isEqualTo("Errore nel processo di adozione.");
+
+        assertThat(response.getBody()).isInstanceOf(ResultDto.class);
+        ResultDto<?> body = (ResultDto<?>) response.getBody();
+        assertThat(body).isNotNull();
+        // Corretta la stringa in base al tuo log (che concatena il messaggio dell'eccezione)
+        assertThat(body.getMessage()).isEqualTo("Errore critico durante il processo: Errore PDF");
+        assertThat(body.isSuccess()).isFalse();
     }
 }
