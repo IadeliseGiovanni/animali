@@ -10,10 +10,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RestController
+@RestController //json
 @RequestMapping("VisitaMedica")
-@CrossOrigin(origins = "http://localhost:4200")
-@PreAuthorize("hasRole('VETERINARIO')")
+@CrossOrigin(origins = "http://localhost:4200") //comunicare frontend e backend
 public class VisitaMedicaController extends AbstractController<VisitaMedicaDto> {
 
     @Autowired

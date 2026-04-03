@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public abstract class AbstractService<ENTITY,DTO> implements ServiceDTO<DTO> {
-
+//metodi CRUD Generalizzati
 
     protected JpaRepository<ENTITY,Integer> repository;
     protected Converter<ENTITY,DTO> converter;

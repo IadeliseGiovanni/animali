@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false) // Disabilitiamo i filtri di sicurezza per testare solo la logica dell'endpoint
 public class AdottanteControllerTest {
 
-    @Autowired
+    @Autowired // istanziando dipendenza
     private MockMvc mockMvc; // Simula il client che effettua le chiamate API
 
     @MockBean

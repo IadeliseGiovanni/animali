@@ -4,7 +4,7 @@ package it.adozioni.animali.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+// converte i dati ed è un mapper generalizzato quindi lo fa in maniera generale.
 
 public interface Converter<Entity, DTO> {
 

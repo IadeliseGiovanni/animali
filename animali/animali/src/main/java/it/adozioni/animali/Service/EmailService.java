@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-    @Autowired
+    @Autowired //inietta la dipendenza
     private JavaMailSender mailSender;
 
     // Questa variabile conterrà "iadelisegiovanni2000@gmail.com" presa dal properties

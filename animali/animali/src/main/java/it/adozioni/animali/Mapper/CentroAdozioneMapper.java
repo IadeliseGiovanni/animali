@@ -10,7 +10,7 @@ public class CentroAdozioneMapper extends AbstractConverter<CentroAdozione, Cent
 
     private final ModelMapper modelMapper = new ModelMapper();
 
-    @Override
+    @Override //riscrrittura del metodo
     public CentroAdozione toEntity(CentroAdozioneDto dto) {
         if (dto == null) return null;
         return modelMapper.map(dto, CentroAdozione.class);
