@@ -29,11 +29,13 @@ public class Volontario implements UserDetails {
     private String cf;      // codice fiscale
     private String turno;   // turno assegnato
 
+    @Column(unique = true, nullable = false)
     private String email;
 
     @ManyToOne
     @JoinColumn(name = "centro_id", nullable = true)
     private CentroAdozione centroAdozione;
+
 
     @Column(nullable = false)
     private String password;

@@ -24,7 +24,7 @@ public class Adottante implements UserDetails { //implementando dice usa questa 
     private String cognome;
 
     // AGGIUNTO: unique = true per impedire i duplicati che bloccavano il login
-    // UNIQUE è importante perchè impedisce a due persone di registrare con lo stesso indirizzo
+    // UNIQUE true è importante perchè impedisce a due persone di registrare con lo stesso indirizzo
     @Column(unique = true, nullable = false)
     private String email;
 
