@@ -7,51 +7,50 @@ import it.adozioni.animali.Repository.CentroAdozioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class CentroAdozioneService extends AbstractService<CentroAdozione, CentroAdozioneDto> {
-
-    private final CentroAdozioneRepository repository;
-    private final CentroAdozioneMapper mapper;
+public class CentroAdozioneService {
 
     @Autowired
-    public CentroAdozioneService(CentroAdozioneRepository repository, CentroAdozioneMapper mapper) {
-        super(repository, mapper);
-        this.repository = repository;
-        this.mapper = mapper;
-    }
+    private CentroAdozioneRepository repository;
+    @Autowired
+    private CentroAdozioneMapper mapper;
 
-    // 1 JPA AUTO X CITTA
-    public List<CentroAdozioneDto> findByCitta(String citta) {
-        List<CentroAdozione> list = repository.findByCitta(citta);
-        if (list == null || list.isEmpty()) return new ArrayList<>();
-        return mapper.toDTOList(list);
-    }
-
-    // 2 JPA AUTO X NOPROFIT
-    public List<CentroAdozioneDto> findByIsNoProfit(boolean noProfit) {
-        List<CentroAdozione> list = repository.findByIsNoProfit(noProfit);
-        if (list == null || list.isEmpty()) return new ArrayList<>();
-        return mapper.toDTOList(list);
-    }
-
-    // 3 JPA AUTO X NOME CENTRO
-    public CentroAdozioneDto findByNomeCentro(String nome) {
-        // Se la repository restituisce una lista (come nello screenshot precedente)
-        List<CentroAdozione> entities = repository.findByNomeCentro(nome);
-        if (entities == null || entities.isEmpty()) return null;
-        return mapper.toDTO(entities.get(0));
-    }
-
-    // 4 LISTA TUTTI I CENTRI (MAPPATI DTO)
+    // --- METODI PER "USER" ---
     public List<CentroAdozioneDto> listaTuttiICentri() {
-        return mapper.toDTOList(repository.findAll());
+        return repository.findAll().stream().map(mapper::toDTO).collect(Collectors.toList());
     }
 
-    // 5 METODO PER ENTITY (UTILE PER TEST O LOGICA INTERNA)
-    public CentroAdozione findByIdEntity(Integer id) {
-        return repository.findById(id).orElse(null);
+    public List<CentroAdozioneDto> findByCitta(String citta) {
+        return repository.findByCitta(citta).stream().map(mapper::toDTO).collect(Collectors.toList());
+    }
+
+    public List<CentroAdozioneDto> findByIsNoProfit(boolean noProfit) {
+        return repository.findByIsNoProfit(noProfit).stream().map(mapper::toDTO).collect(Collectors.toList());
+    }
+
+    public CentroAdozioneDto findByNomeCentro(String nome) {
+        List<CentroAdozione> list = repository.findByNomeCentro(nome);
+        return list.isEmpty() ? null : mapper.toDTO(list.get(0));
+    }
+
+    // --- METODI PER "ADMIN" (Quelli che probabilmente ti danno rosso) ---
+    public CentroAdozioneDto salvaNuovo(CentroAdozioneDto dto) {
+        CentroAdozione entity = mapper.toEntity(dto);
+        CentroAdozione salvato = repository.save(entity);
+        return mapper.toDTO(salvato);
+    }
+
+    public CentroAdozioneDto aggiorna(Integer id, CentroAdozioneDto dto) {
+        if (!repository.existsById(id)) return null;
+        CentroAdozione entity = mapper.toEntity(dto);
+        entity.setId(id); // Assicura che stiamo aggiornando lo stesso ID
+        return mapper.toDTO(repository.save(entity));
+    }
+
+    public void elimina(Integer id) {
+        repository.deleteById(id);
     }
 }
