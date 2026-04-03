@@ -22,7 +22,7 @@ public class AdottanteDto {
     private String telefono;
     private Boolean isSchedato;
     private List<Animale> animaliAdottati;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // permette di ricevere password durante la registrazione
     private String password;
 
 }

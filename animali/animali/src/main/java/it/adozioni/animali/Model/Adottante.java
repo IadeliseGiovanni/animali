@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "adottante", schema = "public")
-public class Adottante implements UserDetails {
+public class Adottante implements UserDetails { //implementando dice usa questa classe per gestire il login
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,7 @@ public class Adottante implements UserDetails {
     private String cognome;
 
     // AGGIUNTO: unique = true per impedire i duplicati che bloccavano il login
+    // UNIQUE è importante perchè impedisce a due persone di registrare con lo stesso indirizzo
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -39,7 +40,7 @@ public class Adottante implements UserDetails {
     private List<Animale> animaliAdottati;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() { // trasforma stringa come USER a ROLE_USER
         if (this.ruolo == null || this.ruolo.isEmpty()) {
             return List.of();
         }
@@ -59,7 +60,7 @@ public class Adottante implements UserDetails {
     public boolean isAccountNonExpired() { return true; }
 
     @Override
-    public boolean isAccountNonLocked() { return isSchedato == null || !isSchedato; }
+    public boolean isAccountNonLocked() { return isSchedato == null || !isSchedato; } // permette gli admin di bloccare un utente se necessario
 
     @Override
     public boolean isCredentialsNonExpired() { return true; }

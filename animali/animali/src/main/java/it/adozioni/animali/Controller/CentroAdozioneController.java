@@ -14,9 +14,7 @@ public class CentroAdozioneController {
     @Autowired
     private CentroAdozioneService centroService;
 
-    // ==========================================
     // VISTA USER: "Voglio vedere gli animali"
-    // ==========================================
 
     @GetMapping("/user/lista")
     public String visualizzaComeUser() {
@@ -32,9 +30,8 @@ public class CentroAdozioneController {
                 "Ricerca per la città di " + citta + ": \n" + risultati.toString();
     }
 
-    // ==========================================
     // VISTA ADMIN: "Voglio gestire il database"
-    // ==========================================
+
 
     @PostMapping("/admin/nuovo")
     public String creaComeAdmin(@RequestBody CentroAdozioneDto dto) {
