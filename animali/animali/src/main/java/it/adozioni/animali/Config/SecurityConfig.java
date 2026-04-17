@@ -40,7 +40,7 @@ public class SecurityConfig {
                 );
         return http.build();
     }
-
+//
     @Bean
     @Profile("!test")
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

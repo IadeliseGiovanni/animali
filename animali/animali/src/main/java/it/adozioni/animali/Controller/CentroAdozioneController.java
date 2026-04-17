@@ -21,7 +21,7 @@ public class CentroAdozioneController {
     public ResponseEntity<List<CentroAdozioneDto>> getAll() {
         return ResponseEntity.ok(centroService.listaTuttiICentri());
     }
-
+//
     // Cerca per città: /api/centri/citta/Roma
     @GetMapping("/citta/{citta}")
     public List<CentroAdozioneDto> findByCitta(@PathVariable String citta) {

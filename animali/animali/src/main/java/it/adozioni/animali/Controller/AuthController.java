@@ -75,7 +75,7 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
                         .body("Errore: Devi confermare la tua email prima di accedere a PetFlow.");
             }
-
+//
             // 2. L'AuthenticationManager controlla la password
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())

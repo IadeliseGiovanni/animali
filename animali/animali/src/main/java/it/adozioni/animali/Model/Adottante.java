@@ -39,7 +39,7 @@ public class Adottante implements UserDetails { //implementando dice usa questa 
     private boolean enabled = false;
     private String verificationToken;
 
-    @OneToMany(mappedBy = "adottante")
+    @OneToMany(mappedBy = "adottante")//
     private List<Animale> animaliAdottati;
 
     @Override

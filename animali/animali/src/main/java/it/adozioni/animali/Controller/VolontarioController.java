@@ -21,7 +21,7 @@ public class VolontarioController extends AbstractController<VolontarioDto> {
     public ResponseEntity<List<VolontarioDto>> getAll() {
         return ResponseEntity.ok(service.findAll());
     }
-
+//
     // 🔹 1 - INSERT
     @PostMapping("/insert")
     public VolontarioDto insert(@RequestBody VolontarioDto dto) {

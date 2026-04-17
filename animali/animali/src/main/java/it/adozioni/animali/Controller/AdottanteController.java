@@ -24,7 +24,7 @@ public class AdottanteController extends AbstractController<AdottanteDto> {
     public List<AdottanteDto> findByCognome(@RequestParam("cognome") String cognome) {
         return service.findByCognome(cognome);
     }
-
+//
     @GetMapping("/all") // Oppure /lista, basta che coincida con Angular
     public List<AdottanteDto> getAll() {
         return service.findAll();

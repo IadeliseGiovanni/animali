@@ -28,4 +28,5 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+    //
 }

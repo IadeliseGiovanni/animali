@@ -24,5 +24,5 @@ public class AdottanteDto {
     private List<Animale> animaliAdottati;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // permette di ricevere password durante la registrazione
     private String password;
-
+//
 }

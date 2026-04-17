@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor //opzionale mettere quando serve
-@Table(name = "centri_adozione", schema = "public")
+@Table(name = "centri_adozione", schema = "public")//
 public class CentroAdozione {
 
     @Id

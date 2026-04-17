@@ -57,7 +57,7 @@ public class AnimaleService extends AbstractService<Animale, AnimaleDto> {
         List<Animale> lista = animaleRepository.findFiltered(s, g, centroId);
         return animaleMapper.toDTOList(lista);
     }
-
+//
     public List<AnimaleDto> getAnimaliByCentro(Long centroId) {
         return animaleMapper.toDTOList(animaleRepository.findByCentroAdozioneId(centroId));
     }

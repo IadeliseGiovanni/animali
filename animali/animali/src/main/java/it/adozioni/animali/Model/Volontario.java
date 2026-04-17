@@ -43,7 +43,7 @@ public class Volontario implements UserDetails {
     private String password;
 
     private String ruolo;
-
+//
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.ruolo == null || this.ruolo.isEmpty()) {

@@ -48,7 +48,7 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
         return adottanteRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato con email: " + email));
     }
-
+//
     /**
      * Registra un nuovo utente criptando la password.
      */

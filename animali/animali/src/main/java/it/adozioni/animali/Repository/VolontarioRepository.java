@@ -48,3 +48,4 @@ public interface VolontarioRepository extends JpaRepository<Volontario, Integer>
 
     Optional<Volontario> findByEmail(String email);
 }
+//

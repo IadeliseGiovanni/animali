@@ -49,7 +49,7 @@ public class CentroAdozioneService {
         entity.setId(id); // Assicura che stiamo aggiornando lo stesso ID
         return mapper.toDTO(repository.save(entity));
     }
-
+//
     public void elimina(Integer id) {
         repository.deleteById(id);
     }

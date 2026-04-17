@@ -51,7 +51,7 @@ public class AnimaleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(ResultDto.error("Errore: Animale o Adottante non trovati nel database."));
         }
-
+//
         try {
             // 2. Generazione del PDF Professionale (Verde Salvia) tramite DocumentoService
             byte[] pdf = documentoService.creaPdf(animale, adottante);

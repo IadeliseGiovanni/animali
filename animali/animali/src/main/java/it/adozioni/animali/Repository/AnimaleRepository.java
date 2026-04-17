@@ -48,3 +48,4 @@ public interface AnimaleRepository extends JpaRepository<Animale,Integer> {
                                @Param("genere") String genere,
                                @Param("centroId") Long centroId);
 }
+//

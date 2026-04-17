@@ -40,7 +40,7 @@ public class ApplicationConfig {
 
         return authProvider;
     }
-
+//
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

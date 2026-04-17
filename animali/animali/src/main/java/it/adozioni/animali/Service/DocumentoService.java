@@ -42,7 +42,7 @@ public class DocumentoService {
             Font fontSection = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, forestGreen);
             Font fontText = FontFactory.getFont(FontFactory.HELVETICA, 10, Color.BLACK);
             Font fontSmall = FontFactory.getFont(FontFactory.HELVETICA, 8, Color.DARK_GRAY);
-
+//
             // --- 3. HEADER ---
             Paragraph header = new Paragraph("SISTEMA NAZIONALE GESTIONE RIFUGI\nProtocollo Adozioni Interno", fontSub);
             header.setAlignment(Element.ALIGN_RIGHT);

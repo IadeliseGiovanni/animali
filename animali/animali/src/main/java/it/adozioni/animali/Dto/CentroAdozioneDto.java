@@ -33,4 +33,5 @@ public class CentroAdozioneDto {
 
     private Double latitudine;
     private Double longitudine;
+    //
 }

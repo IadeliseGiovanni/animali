@@ -28,4 +28,5 @@ public class ResultDto<T> {
     public static <T> ResultDto<T> error(String message) {
         return new ResultDto<>(false, message, null);
     }
+    //
 }

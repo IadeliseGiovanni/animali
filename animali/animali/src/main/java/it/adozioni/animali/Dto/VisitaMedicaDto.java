@@ -25,4 +25,4 @@ public class VisitaMedicaDto {
     private Animale animale;
 
     private String note;
-}
+}//

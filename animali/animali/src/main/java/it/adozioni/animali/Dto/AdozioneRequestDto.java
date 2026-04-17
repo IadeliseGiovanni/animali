@@ -25,4 +25,5 @@ public class AdozioneRequestDto {
 
     @JsonProperty("noteAggiuntive")
     private String noteAggiuntive;
+    //
 }

@@ -38,7 +38,7 @@ public class VolontarioService extends AbstractService<Volontario, VolontarioDto
         return volontarioRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato con email: " + email));
     }
-
+//
     public List<VolontarioDto> findAll() {
         return volontarioMapper.toDTOList(repository.findAll());
     }

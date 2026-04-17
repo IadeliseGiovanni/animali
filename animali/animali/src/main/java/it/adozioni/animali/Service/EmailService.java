@@ -54,7 +54,7 @@ public class EmailService {
         }
     }
 
-    /**
+    /**h
      * STEP 2: Invia una mail di notifica al Centro (a te stesso).
      */
     public void inviaNotificaRicezioneAlCentro(String emailAdottante, String nomeAnimale) {

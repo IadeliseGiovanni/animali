@@ -26,7 +26,7 @@ public class VisitaMedicaController extends AbstractController<VisitaMedicaDto> 
     public List<VisitaMedicaDto> findByData(@RequestParam("data") LocalDateTime data) {
         return service.findByData(data);
     }
-
+//
     @GetMapping("/findByEsito")
     public List<VisitaMedicaDto> findByEsito(@RequestParam("esito") String esito) {
         return service.findByEsito(esito);

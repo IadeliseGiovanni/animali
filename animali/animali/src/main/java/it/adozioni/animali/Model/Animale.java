@@ -25,7 +25,7 @@ public class Animale {
     private String specie;
     private String razza;
     private int eta;
-
+//
     @Column(name = "genere")
     private String genere;
 

@@ -29,7 +29,7 @@ public class VisitaMedicaService extends AbstractService<VisitaMedica, VisitaMed
         this.visitaMedicaRepository = repository;
         this.visitaMedicaMapper = mapper;
     }
-
+//
     public List<VisitaMedicaDto> findAll() {
         return visitaMedicaMapper.toDTOList(repository.findAll());
     }

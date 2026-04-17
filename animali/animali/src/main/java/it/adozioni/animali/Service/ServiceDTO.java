@@ -15,3 +15,4 @@ public interface ServiceDTO<DTO> {
 
     public void delete (Integer id);
 }
+//

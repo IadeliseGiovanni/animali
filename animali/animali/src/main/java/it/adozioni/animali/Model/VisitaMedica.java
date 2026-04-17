@@ -33,6 +33,6 @@ public class VisitaMedica {
     @ManyToOne
     @JoinColumn(name = "animale_id", nullable = true)
     @JsonIgnore
-    private Animale animale;
+    private Animale animale;//
 
 }
