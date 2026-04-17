@@ -19,6 +19,7 @@ public class AnimaleDto {
     private String specie;
     private String razza;
     private int eta;
+    private String genere;
 
     // Cambiato da isAdottato a adottato per coerenza totale
     private boolean adottato;

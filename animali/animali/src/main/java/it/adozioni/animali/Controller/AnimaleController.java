@@ -68,9 +68,6 @@ public class AnimaleController {
             String fileName = "Contratto_" + animale.getNome().replace(" ", "_") + ".pdf";
             headers.setContentDispositionFormData("attachment", fileName);
 
-            // LOG di successo in console
-            System.out.println("LOG: Processo completato per l'adozione di " + animale.getNome());
-
             return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
 
         } catch (Exception e) {
