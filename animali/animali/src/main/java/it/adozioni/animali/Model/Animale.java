@@ -54,4 +54,7 @@ public class Animale {
     @JoinColumn(name = "centri_adozione_id", nullable = true) // Fondamentale: cambiato in TRUE
     @JsonIgnore
     private CentroAdozione centroAdozione;
+
+    @Column(name = "foto_url")
+    private String fotoUrl;
 }

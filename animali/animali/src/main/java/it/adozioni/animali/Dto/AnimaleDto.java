@@ -31,5 +31,6 @@ public class AnimaleDto {
 
     private String descrizione;
     private String videoUrl;
+    private String fotoUrl;
     //
 }
