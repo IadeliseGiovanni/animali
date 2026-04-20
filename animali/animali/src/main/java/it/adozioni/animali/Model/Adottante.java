@@ -2,6 +2,8 @@ package it.adozioni.animali.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +32,12 @@ public class Adottante implements UserDetails { //implementando dice usa questa 
 
     private String telefono;
     private Boolean isSchedato;
+
+    private LocalDateTime dataDiNascita;
+
+    private String codiceFiscale;
+
+    private String indirizzo;
 
     @Column(nullable = false)
     private String password;
@@ -63,7 +71,11 @@ public class Adottante implements UserDetails { //implementando dice usa questa 
     public boolean isAccountNonExpired() { return true; }
 
     @Override
-    public boolean isAccountNonLocked() { return isSchedato == null || !isSchedato; } // permette gli admin di bloccare un utente se necessario
+    public boolean isAccountNonLocked() {
+        // L'account è sempre sbloccato, a meno che tu non voglia
+        // aggiungere un campo apposito "isBloccato" nel DB.
+        return true;
+    }
 
     @Override
     public boolean isCredentialsNonExpired() { return true; }

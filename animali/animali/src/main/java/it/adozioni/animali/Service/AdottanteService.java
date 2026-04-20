@@ -90,17 +90,7 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
         // 5. Salvataggio nel DB
         Adottante salvato = adottanteRepository.save(entity);
 
-        // 6. INVIO REALE DELL'EMAIL
-        // Usiamo un try-catch opzionale se non vuoi che l'intera registrazione
-        // fallisca nel caso il server email sia momentaneamente offline
-        try {
-            emailService.sendVerificationEmail(salvato.getEmail(), tokenVerifica);
-            System.out.println("DEBUG: Email di verifica inviata a: " + salvato.getEmail());
-        } catch (Exception e) {
-            System.err.println("DEBUG ERROR: Impossibile inviare l'email: " + e.getMessage());
-            // Opzionale: puoi decidere di lanciare un'eccezione o continuare
-        }
-
+        this.inviaEmailVerifica(salvato.getEmail(), tokenVerifica);
         return adottanteMapper.toDTO(salvato);
     }
 
@@ -127,5 +117,49 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
     public List<AdottanteDto> findByCognome(String cognome) {
         List<Adottante> listaEntity = adottanteRepository.findByCognome(cognome);
         return adottanteMapper.toDTOList(listaEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public AdottanteDto getMioProfilo(String email) {
+        // 1. Recupero l'entity dal DB
+        Adottante entity = adottanteRepository.findByEmailWithAnimals(email)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+
+        // 2. Mappatura Entity -> DTO
+        // Se il tuo mapper già gestisce la lista 'animaliAdottati', usalo pure
+        return adottanteMapper.toDTO(entity);
+    }
+
+    @Transactional
+    public void aggiornaIdoneita(int id, boolean stato) {
+        Adottante adottante = adottanteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Adottante non trovato"));
+
+        adottante.setIsSchedato(stato);
+        adottanteRepository.save(adottante);
+    }
+
+    @Transactional
+    public void aggiornaRuolo(int id, String nuovoRuolo) {
+        Adottante adottante = adottanteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Adottante non trovato"));
+
+        // Se usi un Enum per il ruolo: Ruolo.valueOf(nuovoRuolo)
+        adottante.setRuolo(nuovoRuolo);
+        adottanteRepository.save(adottante);
+    }
+
+    public Adottante findByEmailEntity(String email) {
+        return adottanteRepository.findByEmail(email).orElse(null);
+    }
+
+    public void inviaEmailVerifica(String email, String token) {
+        try {
+            emailService.sendVerificationEmail(email, token);
+            System.out.println("DEBUG: Email di verifica inviata a: " + email);
+        } catch (Exception e) {
+            System.err.println("DEBUG ERROR: Errore durante l'invio email: " + e.getMessage());
+            throw new RuntimeException("Impossibile inviare l'email di verifica. Riprova più tardi.");
+        }
     }
 }

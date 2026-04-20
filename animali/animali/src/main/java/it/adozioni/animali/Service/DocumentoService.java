@@ -18,7 +18,6 @@ public class DocumentoService {
 
     public byte[] creaPdf(Animale animale, Adottante adottante) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        // Definizione del documento con margini speculari per un aspetto editoriale
         Document document = new Document(PageSize.A4, 60, 60, 50, 50);
 
         try {
@@ -42,7 +41,7 @@ public class DocumentoService {
             Font fontSection = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, forestGreen);
             Font fontText = FontFactory.getFont(FontFactory.HELVETICA, 10, Color.BLACK);
             Font fontSmall = FontFactory.getFont(FontFactory.HELVETICA, 8, Color.DARK_GRAY);
-//
+
             // --- 3. HEADER ---
             Paragraph header = new Paragraph("SISTEMA NAZIONALE GESTIONE RIFUGI\nProtocollo Adozioni Interno", fontSub);
             header.setAlignment(Element.ALIGN_RIGHT);
@@ -63,29 +62,29 @@ public class DocumentoService {
 
             // --- 5. ART. 1: DATI ADOTTANTE ---
             document.add(new Paragraph("ART. 1 - DATI DELL'AFFIDATARIO", fontSection));
-            document.add(new Paragraph("Il sottoscritto " + adottante.getNome().toUpperCase() + " " + adottante.getCognome().toUpperCase() +
+            String nomeCompleto = (adottante.getNome() != null ? adottante.getNome().toUpperCase() : "N.D.") + " " +
+                    (adottante.getCognome() != null ? adottante.getCognome().toUpperCase() : "N.D.");
+
+            document.add(new Paragraph("Il sottoscritto " + nomeCompleto +
                     ", registrato con email " + adottante.getEmail() + ", dichiara sotto la propria responsabilità di accogliere l'animale descritto all'Art. 2, " +
                     "assumendone la custodia legale e l'onere del mantenimento.", fontText));
             document.add(new Paragraph("\n"));
 
-            // --- 6. ART. 2: IDENTIFICAZIONE ANIMALE (LOGICA DINAMICA) ---
+            // --- 6. ART. 2: IDENTIFICAZIONE ANIMALE ---
             document.add(new Paragraph("ART. 2 - IDENTIFICAZIONE ANIMALE", fontSection));
             document.add(new Paragraph("___________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA, 8, Color.WHITE)));
 
             Paragraph infoAnimale = new Paragraph();
             infoAnimale.setFont(fontText);
 
-            // Nome e Specie
             infoAnimale.add(new Chunk("NOME: ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, forestGreen)));
-            infoAnimale.add(animale.getNome().toUpperCase() + " | ");
+            infoAnimale.add((animale.getNome() != null ? animale.getNome().toUpperCase() : "N.D.") + " | ");
             infoAnimale.add(new Chunk("SPECIE: ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, forestGreen)));
             infoAnimale.add(animale.getSpecie() + "\n");
 
-            // Razza
             infoAnimale.add(new Chunk("RAZZA: ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, forestGreen)));
             infoAnimale.add((animale.getRazza() != null ? animale.getRazza() : "Incrocio") + " | ");
 
-            // LOGICA MICROCHIP: Se nullo nel DB, genera un codice di protocollo
             infoAnimale.add(new Chunk("MICROCHIP: ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, forestGreen)));
             String mc = (animale.getMicrochip() != null && !animale.getMicrochip().isEmpty())
                     ? animale.getMicrochip()
@@ -100,43 +99,37 @@ public class DocumentoService {
             Paragraph clausole = new Paragraph();
             clausole.setFont(fontSmall);
             clausole.setAlignment(Element.ALIGN_JUSTIFIED);
-            clausole.add("3.1 L'adottante si impegna a garantire il benessere psico-fisico del soggetto, fornendo idoneo riparo, nutrizione e profilassi veterinaria.\n");
-            clausole.add("3.2 È fatto divieto assoluto di cessione a terzi, vendita, o abbandono del soggetto senza previa comunicazione scritta al centro.\n");
-            clausole.add("3.3 Il centro si riserva il diritto di effettuare controlli post-affido per verificare lo stato di salute e integrazione del soggetto.\n");
-            clausole.add("3.4 Qualora venissero riscontrate negligenze, il centro potrà procedere al ritiro immediato dell'animale e alla segnalazione alle autorità competenti.");
+            clausole.add("3.1 L'adottante si impegna a garantire il benessere psico-fisico del soggetto...\n");
+            clausole.add("3.2 È fatto divieto assoluto di cessione a terzi, vendita, o abbandono...\n");
+            clausole.add("3.3 Il centro si riserva il diritto di effettuare controlli post-affido...\n");
+            clausole.add("3.4 Qualora venissero riscontrate negligenze, il centro potrà procedere al ritiro immediato.");
             document.add(clausole);
 
             document.add(new Paragraph("\n\n\n\n"));
 
-            // --- 8. FIRME PERSONALIZZATE ---
+            // --- 8. FIRME ---
             Paragraph firme = new Paragraph();
             firme.setAlignment(Element.ALIGN_CENTER);
-
-            // Colonna Responsabile (Tu)
-            Chunk chunkResp = new Chunk("IL RESPONSABILE DEL CENTRO\n", fontSub);
-            firme.add(chunkResp);
+            firme.add(new Chunk("IL RESPONSABILE DEL CENTRO\n", fontSub));
             firme.add(new Chunk("Giovanni Iadelise\n", fontSmall));
             firme.add(new Chunk("____________________________", fontSub));
-
-            firme.add(new Chunk("              ")); // Spazio centrale
-
-            // Colonna Adottante
+            firme.add(new Chunk("              "));
             firme.add(new Chunk("L'ADOTTANTE DICHIARANTE\n", fontSub));
-            firme.add(new Chunk(adottante.getNome() + " " + adottante.getCognome() + "\n", fontSmall));
+            firme.add(new Chunk(nomeCompleto + "\n", fontSmall));
             firme.add(new Chunk("____________________________", fontSub));
-
             document.add(firme);
 
             // --- 9. FOOTER ---
-            Paragraph footer = new Paragraph("\n\n🐾 Documento generato elettronicamente dal sistema 'Animali Rescue'. Validità legale ai sensi delle norme vigenti.", fontSmall);
+            Paragraph footer = new Paragraph("\n\n🐾 Documento generato elettronicamente dal sistema 'PetFlow'.", fontSmall);
             footer.setAlignment(Element.ALIGN_CENTER);
             document.add(footer);
 
             document.close();
+            return out.toByteArray(); // Restituisci i byte dopo la chiusura
+
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-
-        return out.toByteArray();
     }
 }

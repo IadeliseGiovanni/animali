@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -21,6 +22,12 @@ public class AdottanteDto {
     private String email;
     private String telefono;
     private Boolean isSchedato;
+    private LocalDateTime dataDiNascita;
+    private String ruolo;
+
+    private Animale animale;
+    private String indirizzo;
+    private String codiceFiscale;
     private List<Animale> animaliAdottati;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // permette di ricevere password durante la registrazione
     private String password;

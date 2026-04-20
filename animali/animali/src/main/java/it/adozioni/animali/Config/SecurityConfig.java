@@ -3,6 +3,7 @@ package it.adozioni.animali.Config;
 import it.adozioni.animali.Config.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -49,14 +50,13 @@ public class SecurityConfig {
                 .cors(cors -> cors.configure(http)) // Assicurati che i CORS siano attivi
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/VisitaMedica/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Adottante").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/Volontario").authenticated()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/animali/**").permitAll()
-                        .requestMatchers("/VisitaMedica/**").permitAll() // Copriamo l'URL senza /api
-                        .requestMatchers("/api/VisitaMedica/**").permitAll() // E quello con /api
-                        .requestMatchers("/api/animali/**").permitAll()   // Aggiunto
-                        .requestMatchers("/api/Volontario/**").permitAll() // Aggiunto
-                        .requestMatchers("/api/centri/**").permitAll()
-                        .requestMatchers("/api/Adottante/**").permitAll()
+                        .requestMatchers("/api/Adottante/me").authenticated()
+                        .requestMatchers("/api/animali/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)

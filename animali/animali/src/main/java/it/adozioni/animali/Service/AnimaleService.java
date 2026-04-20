@@ -45,17 +45,26 @@ public class AnimaleService extends AbstractService<Animale, AnimaleDto> {
         return animaleMapper.toDTOList(animaleRepository.findByNome(nome));
     }
 
+    public List<AnimaleDto> findAllDisponibili() {
+        return animaleMapper.toDTOList(animaleRepository.findByAdottatoFalse());
+    }
+
     public List<AnimaleDto> findAll() {
         return animaleMapper.toDTOList(animaleRepository.findAll());
     }
 
     public List<AnimaleDto> filterAnimali(String specie, String genere, Long centroId) {
-        // Puliamo le stringhe vuote che arrivano da Angular (se presenti)
         String s = (specie != null && !specie.isEmpty()) ? specie : null;
         String g = (genere != null && !genere.isEmpty()) ? genere : null;
 
+        // Qui dobbiamo assicurarci che la query nel repository filtri per adottato = false
+        // Se la tua query findFiltered è una @Query personalizzata, dovrai aggiungere "AND a.adottato = false"
         List<Animale> lista = animaleRepository.findFiltered(s, g, centroId);
-        return animaleMapper.toDTOList(lista);
+
+        // Se non vuoi toccare la query SQL, puoi filtrare qui con gli Stream (meno performante ma veloce da implementare)
+        return animaleMapper.toDTOList(
+                lista.stream().filter(a -> !a.isAdottato()).toList()
+        );
     }
 //
     public List<AnimaleDto> getAnimaliByCentro(Long centroId) {

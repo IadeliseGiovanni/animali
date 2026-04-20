@@ -14,6 +14,16 @@ public interface AnimaleRepository extends JpaRepository<Animale,Integer> {
     List<Animale>findByRazza(String razza);
     List<Animale>findByGenere(String genere);
     List<Animale>findBySpecie(String specie);
+    List<Animale> findByAdottatoFalse();
+
+    // Se usi i filtri (Specie e Genere), dobbiamo aggiungere "AndAdottatoFalse"
+    List<Animale> findBySpecieAndGenereAndAdottatoFalse(String specie, String genere);
+
+    // Filtro solo per specie
+    List<Animale> findBySpecieAndAdottatoFalse(String specie);
+
+    // Filtro solo per genere
+    List<Animale> findByGenereAndAdottatoFalse(String genere);
     List<Animale>findByRazzaAndSpecie(String razza, String specie);
     // 1. Trova tutti gli animali di un centro specifico che non sono ancora stati adottati
     @Query("SELECT a FROM Animale a WHERE a.centroAdozione.id = :centroId AND a.adottato = false")

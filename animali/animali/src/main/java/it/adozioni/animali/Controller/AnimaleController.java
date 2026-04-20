@@ -34,7 +34,7 @@ public class AnimaleController {
     private EmailService emailService;
 
     @PostMapping("/genera-contratto")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<?> generaContratto(@RequestBody AdozioneRequestDto adozioneDto) {
 
         // --- VALIDAZIONE INPUT (Evita l'errore 400 generico) ---
@@ -78,7 +78,9 @@ public class AnimaleController {
     }
 
     @GetMapping("/all")
-        public ResponseEntity<?> getAll() { return ResponseEntity.ok(animaleService.findAll());
+    public ResponseEntity<?> getAll() {
+        // Cambiato: restituisce solo quelli disponibili per la vetrina
+        return ResponseEntity.ok(animaleService.findAllDisponibili());
     }
 
     @GetMapping("/search")
@@ -86,7 +88,6 @@ public class AnimaleController {
             @RequestParam(required = false) String specie,
             @RequestParam(required = false) String genere,
             @RequestParam(required = false) Long centroId){
-        System.out.println("DEBUG FILTRI -> Specie: " + specie + ", Genere: " + genere + ", CentroID: " + centroId);
         return animaleService.filterAnimali(specie, genere, centroId);
     }
 

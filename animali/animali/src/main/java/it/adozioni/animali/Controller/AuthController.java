@@ -3,6 +3,8 @@ package it.adozioni.animali.Controller;
 import it.adozioni.animali.Dto.AdottanteDto;
 import it.adozioni.animali.Dto.LoginRequest;
 import it.adozioni.animali.Dto.VolontarioDto;
+import it.adozioni.animali.Model.Adottante;
+import it.adozioni.animali.Model.Volontario;
 import it.adozioni.animali.Service.AdottanteService;
 import it.adozioni.animali.Service.JwtService;
 import it.adozioni.animali.Service.VolontarioService;
@@ -61,23 +63,26 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
-            // 1. L'AuthenticationManager fa tutto il lavoro sporco:
-            // Controlla se l'utente esiste, se la password è corretta E se è abilitato (isEnabled)
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
             );
 
-            // 2. Recuperiamo l'utente autenticato
-            UserDetails user = (UserDetails) authentication.getPrincipal();
+            Object principal = authentication.getPrincipal();
+            String token = jwtService.generateToken((UserDetails) principal);
 
-            // 3. Generiamo il Token
-            String token = jwtService.generateToken(user);
-
-            Map<String, String> response = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
             response.put("token", token);
 
-            // OPZIONALE: Se vuoi mandare anche il nome al frontend direttamente
-            // response.put("nome", ((Adottante)user).getNome());
+            // Controllo dinamico del tipo di utente
+            if (principal instanceof Adottante) {
+                Adottante a = (Adottante) principal;
+                response.put("nome", a.getNome());
+                response.put("ruolo", a.getRuolo()); // es. "USER"
+            } else if (principal instanceof Volontario) {
+                Volontario v = (Volontario) principal;
+                response.put("nome", v.getNome());
+                response.put("ruolo", "VOLONTARIO");
+            }
 
             return ResponseEntity.ok(response);
 
@@ -104,5 +109,34 @@ public class AuthController {
             return ResponseEntity.ok("Account verificato con successo!");
         }
         return ResponseEntity.badRequest().body("Token non valido o scaduto.");
+    }
+
+    @PostMapping("/resend-verification")
+    public ResponseEntity<?> resendVerification(@RequestParam String email) {
+        try {
+            // Cerchiamo l'adottante tramite email
+            Adottante adottante = adottanteService.findByEmailEntity(email);
+
+            if (adottante == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Errore: Utente non trovato.");
+            }
+
+            if (adottante.isEnabled()) {
+                return ResponseEntity.badRequest()
+                        .body("Errore: L'account è già attivo.");
+            }
+
+            // Recuperiamo il token esistente (o puoi rigenerarlo se preferisci)
+            String token = adottante.getVerificationToken();
+
+            // Usiamo il tuo emailService per spedire
+            adottanteService.inviaEmailVerifica(adottante.getEmail(), token);
+
+            return ResponseEntity.ok("Email di verifica reinviata con successo!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Errore durante il reinvio: " + e.getMessage());
+        }
     }
 }
