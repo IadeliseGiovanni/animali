@@ -47,5 +47,7 @@ public interface VolontarioRepository extends JpaRepository<Volontario, Integer>
     List<Volontario> findByNomeContaining(String keyword);
 
     Optional<Volontario> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }
 //

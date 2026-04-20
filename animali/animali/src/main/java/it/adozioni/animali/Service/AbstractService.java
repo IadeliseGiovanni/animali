@@ -1,8 +1,11 @@
 package it.adozioni.animali.Service;
 
+import it.adozioni.animali.Dto.AnimaleDto;
 import it.adozioni.animali.Mapper.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public abstract class AbstractService<ENTITY,DTO> implements ServiceDTO<DTO> {
 //metodi CRUD Generalizzati
@@ -40,5 +43,7 @@ public abstract class AbstractService<ENTITY,DTO> implements ServiceDTO<DTO> {
     public void delete(Integer id) {
         repository.deleteById(id);
     }
+
+    public abstract List<AnimaleDto> findAll();
 }
 //

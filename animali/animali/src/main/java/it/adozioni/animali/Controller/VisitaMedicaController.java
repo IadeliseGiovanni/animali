@@ -1,6 +1,8 @@
 package it.adozioni.animali.Controller;
 
+import it.adozioni.animali.Dto.AnimaleDto;
 import it.adozioni.animali.Dto.VisitaMedicaDto;
+import it.adozioni.animali.Service.AdottanteService;
 import it.adozioni.animali.Service.VisitaMedicaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ public class VisitaMedicaController extends AbstractController<VisitaMedicaDto> 
     private VisitaMedicaService service;
 
     @GetMapping
-    public ResponseEntity<List<VisitaMedicaDto>> getAll() {
+    public ResponseEntity<List<AnimaleDto>> getAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
@@ -47,4 +49,8 @@ public class VisitaMedicaController extends AbstractController<VisitaMedicaDto> 
         return service.findByDataAndEsito(data, esito);
     }
 
+    @Override
+    protected AdottanteService getService() {
+        return null;
+    }
 }

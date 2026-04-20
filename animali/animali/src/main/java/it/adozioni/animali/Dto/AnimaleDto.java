@@ -30,5 +30,6 @@ public class AnimaleDto {
     private String microchip;
 
     private String descrizione;
+    private String videoUrl;
     //
 }

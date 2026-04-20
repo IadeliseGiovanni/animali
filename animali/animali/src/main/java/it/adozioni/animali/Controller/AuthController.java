@@ -36,6 +36,10 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    /**
+     * Registrazione Adottante.
+     * Risolve l'errore su "registra" richiamando il metodo pubblico del Service.
+     */
     @PostMapping("/register/adottante")
     public ResponseEntity<?> register(@RequestBody AdottanteDto dto) {
         try {
@@ -44,15 +48,16 @@ public class AuthController {
             return new ResponseEntity<>(nuovoUtente, HttpStatus.CREATED);
         } catch (Exception e) {
             System.err.println("DEBUG ERROR: Errore registrazione: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Errore: Email già esistente o dati non validi.");
+            return ResponseEntity.badRequest().body("Errore: " + e.getMessage());
         }
     }
 
+    /**
+     * Registrazione Volontario.
+     */
     @PostMapping("/register/volontario")
     public ResponseEntity<?> registerVolontario(@RequestBody VolontarioDto dto) {
         try {
-            System.out.println("DEBUG: Registrazione Volontario per " + dto.getEmail());
-            // Usa il metodo registra che abbiamo appena sistemato nel VolontarioService
             VolontarioDto nuovoVolontario = volontarioService.registra(dto);
             return new ResponseEntity<>(nuovoVolontario, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -60,6 +65,9 @@ public class AuthController {
         }
     }
 
+    /**
+     * Login centralizzato con gestione dei ruoli dinamica (RBAC).
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
@@ -73,11 +81,11 @@ public class AuthController {
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
 
-            // Controllo dinamico del tipo di utente
+            // Riconoscimento del tipo di utente nel payload di risposta
             if (principal instanceof Adottante) {
                 Adottante a = (Adottante) principal;
                 response.put("nome", a.getNome());
-                response.put("ruolo", a.getRuolo()); // es. "USER"
+                response.put("ruolo", a.getRuolo()); // USER o ADMIN
             } else if (principal instanceof Volontario) {
                 Volontario v = (Volontario) principal;
                 response.put("nome", v.getNome());
@@ -87,51 +95,49 @@ public class AuthController {
             return ResponseEntity.ok(response);
 
         } catch (DisabledException e) {
-            // Questo scatta se isEnabled() nel tuo modello Adottante ritorna false
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("Errore: Conferma la tua email per attivare l'account.");
-        } catch (LockedException e) {
-            // Questo scatta se isAccountNonLocked() ritorna false (utente schedato)
-            return ResponseEntity.status(HttpStatus.LOCKED)
-                    .body("Errore: Il tuo account è stato sospeso.");
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Errore: Email o password errati.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore server.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Errore server: " + e.getMessage());
         }
     }
 
+    /**
+     * Endpoint per la verifica del token via mail.
+     */
     @GetMapping("/verify")
     public ResponseEntity<?> verifyUser(@RequestParam("token") String token) {
-        boolean verified = adottanteService.verifyToken(token); // Logica per cercare il token e settare enabled = true
+        boolean verified = adottanteService.verifyToken(token);
         if (verified) {
             return ResponseEntity.ok("Account verificato con successo!");
         }
         return ResponseEntity.badRequest().body("Token non valido o scaduto.");
     }
 
+    /**
+     * Reinvio mail di attivazione.
+     * Risolve l'errore "cannot find symbol" richiamando findByEmailEntity.
+     */
     @PostMapping("/resend-verification")
     public ResponseEntity<?> resendVerification(@RequestParam String email) {
         try {
-            // Cerchiamo l'adottante tramite email
+            // Cerca l'entità Adottante direttamente sul DB
             Adottante adottante = adottanteService.findByEmailEntity(email);
 
             if (adottante == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Errore: Utente non trovato.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Errore: Utente non trovato.");
             }
 
             if (adottante.isEnabled()) {
-                return ResponseEntity.badRequest()
-                        .body("Errore: L'account è già attivo.");
+                return ResponseEntity.badRequest().body("Errore: L'account è già attivo.");
             }
 
-            // Recuperiamo il token esistente (o puoi rigenerarlo se preferisci)
-            String token = adottante.getVerificationToken();
-
-            // Usiamo il tuo emailService per spedire
-            adottanteService.inviaEmailVerifica(adottante.getEmail(), token);
+            // Invia nuovamente la mail tramite EmailService
+            adottanteService.inviaEmailVerifica(adottante.getEmail(), adottante.getVerificationToken());
 
             return ResponseEntity.ok("Email di verifica reinviata con successo!");
         } catch (Exception e) {

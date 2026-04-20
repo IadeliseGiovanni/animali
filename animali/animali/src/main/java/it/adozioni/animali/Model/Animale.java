@@ -37,6 +37,11 @@ public class Animale {
 
     private String microchip;
 
+
+    @Column(name = "video_url")
+    private String videoUrl;
+
+    // Se non usi Lombok, aggiungi anche Getter e Setter per videoUrl
     @OneToMany(mappedBy = "animale")
     private List<VisitaMedica> visiteMediche;
 

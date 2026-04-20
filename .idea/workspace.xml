@@ -4,12 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="Changes&#10;Animale.java">
-      <change afterPath="$PROJECT_DIR$/animali/animali/src/test/java/it/adozioni/animali/AnimaliTest/AnimaleControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/animali/animali/src/test/java/it/adozioni/animali/AnimaliTest/AnimaleServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/animali/animali/src/test/java/it/adozioni/animali/VolontarioTest/VolontarioControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/animali/animali/src/test/java/it/adozioni/animali/VolontarioTest/VolontarioServiceTest.java" afterDir="false" />
+    <list default="true" id="f469a122-de5c-439a-9e80-b11c2bc8c01d" name="Changes" comment="Modify :&#10;AbstractService.java&#10;AdottanteControllerTest.java&#10;CentroAdozioneMapper.java&#10;Converter.java&#10;EmailService.java&#10;VisitaMedicaController.java">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/AbstractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/AbstractController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/AdottanteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/AdottanteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/AnimaleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/AnimaleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/CentroAdozioneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/CentroAdozioneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/VisitaMedicaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/VisitaMedicaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/VolontarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Controller/VolontarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Dto/AnimaleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Dto/AnimaleDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Mapper/AnimaleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Mapper/AnimaleMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/Animale.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/Animale.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/Volontario.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Model/Volontario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Repository/VolontarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Repository/VolontarioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/AbstractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/AbstractService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/AdottanteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/AdottanteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/AnimaleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/AnimaleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/CentroAdozioneService.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/CentroAdozioneService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/VisitaMedicaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/VisitaMedicaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/VolontarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/animali/animali/src/main/java/it/adozioni/animali/Service/VolontarioService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +41,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="GiovanniIadelise-CentroAdozione" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -41,17 +55,10 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/IadeliseGiovanni/animali.git&quot;,
-    &quot;accountId&quot;: &quot;e1508615-1b5f-4115-8e3c-4298526875d3&quot;
+    &quot;url&quot;: &quot;https://github.com/IadeliseGiovanni/animali&quot;,
+    &quot;accountId&quot;: &quot;460f7e00-6033-4a5f-902e-3914b276c371&quot;
   }
 }</component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1,
   &quot;fromUser&quot;: false
@@ -66,12 +73,28 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;JUnit.AdottanteControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AdottanteServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AnimaleControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AnimaleServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CentroAdozioneControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CentroAdozioneServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.VisitaMedicaControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.VisitaMedicaServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.VolontarioControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.VolontarioServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;Maven.animali [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.animali [install].executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AnimaliApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -81,10 +104,86 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;spring&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.AnimaliApplication">
+    <configuration name="AdottanteControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="animali" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.adozioni.animali.AdottanteTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.adozioni.animali.AdottanteTest" />
+      <option name="MAIN_CLASS_NAME" value="it.adozioni.animali.AdottanteTest.AdottanteControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AdottanteServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="animali" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.adozioni.animali.AdottanteTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.adozioni.animali.AdottanteTest" />
+      <option name="MAIN_CLASS_NAME" value="it.adozioni.animali.AdottanteTest.AdottanteServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CentroAdozioneControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="animali" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.adozioni.animali.CentroAdozioneTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.adozioni.animali.CentroAdozioneTest" />
+      <option name="MAIN_CLASS_NAME" value="it.adozioni.animali.CentroAdozioneTest.CentroAdozioneControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CentroAdozioneServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="animali" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.adozioni.animali.CentroAdozioneTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.adozioni.animali.CentroAdozioneTest" />
+      <option name="MAIN_CLASS_NAME" value="it.adozioni.animali.CentroAdozioneTest.CentroAdozioneServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VolontarioServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="animali" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.adozioni.animali.VolontarioTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.adozioni.animali.VolontarioTest" />
+      <option name="MAIN_CLASS_NAME" value="it.adozioni.animali.VolontarioTest.VolontarioServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AnimaliApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="animali" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="it.adozioni.animali.AnimaliApplication" />
@@ -92,6 +191,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CentroAdozioneServiceTest" />
+        <item itemvalue="JUnit.CentroAdozioneControllerTest" />
+        <item itemvalue="JUnit.AdottanteServiceTest" />
+        <item itemvalue="JUnit.AdottanteControllerTest" />
+        <item itemvalue="JUnit.VolontarioServiceTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -104,6 +220,15 @@
       <workItem from="1774860045164" duration="4760000" />
       <workItem from="1774866354180" duration="502000" />
       <workItem from="1774866895171" duration="303000" />
+      <workItem from="1775119136858" duration="256000" />
+      <workItem from="1775119406264" duration="13415000" />
+      <workItem from="1775199905161" duration="21272000" />
+      <workItem from="1775551566315" duration="10000" />
+      <workItem from="1776418853345" duration="3741000" />
+      <workItem from="1776422824343" duration="893000" />
+      <workItem from="1776441598742" duration="982000" />
+      <workItem from="1776513178866" duration="144000" />
+      <workItem from="1776668249964" duration="15506000" />
     </task>
     <task id="LOCAL-00001" summary="modify">
       <option name="closed" value="true" />
@@ -137,7 +262,63 @@
       <option name="project" value="LOCAL" />
       <updated>1774873907659</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Changes&#10;AdottanteController.java&#10;AdottanteControllerTest.java&#10;AdottanteServiceTest.java&#10;AnimaleControllerTest.java&#10;CentroAdozioneControllerTest.java&#10;pom.xml&#10;VolontarioServiceTest.java">
+      <option name="closed" value="true" />
+      <created>1775120344993</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1775120344993</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Modify :&#10;AnimaleController.java&#10;application.properties&#10;AuthController.java&#10;SecurityConfig.java">
+      <option name="closed" value="true" />
+      <created>1775133348902</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1775133348902</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Modify :&#10;CentroAdozioneController.java&#10;CentroAdozioneService.java">
+      <option name="closed" value="true" />
+      <created>1775202766086</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1775202766086</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Modify :&#10;AnimaleController.java&#10;CentroAdozioneControllerTest.java&#10;CentroAdozioneServiceTest.java">
+      <option name="closed" value="true" />
+      <created>1775205944881</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1775205944881</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Modify :&#10;AdottanteControllerTest.java&#10;AdottanteDto.java&#10;AdottanteServiceTest.java&#10;CentroAdozioneController.java&#10;CentroAdozioneControllerTest.java&#10;CentroAdozioneServiceTest.java">
+      <option name="closed" value="true" />
+      <created>1775217892738</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1775217892738</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Modify :&#10;Adottante.java&#10;CentroAdozione.java&#10;Volontario.java">
+      <option name="closed" value="true" />
+      <created>1775219032409</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1775219032409</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Modify :&#10;AbstractService.java&#10;AdottanteControllerTest.java&#10;CentroAdozioneMapper.java&#10;Converter.java&#10;EmailService.java&#10;VisitaMedicaController.java">
+      <option name="closed" value="true" />
+      <created>1775222189601</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1775222189601</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,7 +335,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="GiovanniIadelise-CentroAdozione" />
+                        <option value="develop" />
                       </list>
                     </value>
                   </entry>
@@ -172,6 +353,51 @@
     <MESSAGE value="Changes&#10;Animale.java&#10;misc.xml&#10;workspace.xml&#10;Unversioned Files" />
     <MESSAGE value="Changes&#10;Changes&#10;Merge Conflicts&#10;misc.xml&#10;workspace.xml" />
     <MESSAGE value="Changes&#10;Animale.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;Animale.java" />
+    <MESSAGE value="Changes&#10;AdottanteController.java&#10;AdottanteControllerTest.java&#10;AdottanteServiceTest.java&#10;AnimaleControllerTest.java&#10;CentroAdozioneControllerTest.java&#10;pom.xml&#10;VolontarioServiceTest.java" />
+    <MESSAGE value="Modify :&#10;AnimaleController.java&#10;application.properties&#10;AuthController.java&#10;SecurityConfig.java" />
+    <MESSAGE value="Modify :&#10;CentroAdozioneController.java&#10;CentroAdozioneService.java" />
+    <MESSAGE value="Modify :&#10;AnimaleController.java&#10;CentroAdozioneControllerTest.java&#10;CentroAdozioneServiceTest.java" />
+    <MESSAGE value="Modify :&#10;AdottanteControllerTest.java&#10;AdottanteDto.java&#10;AdottanteServiceTest.java&#10;CentroAdozioneController.java&#10;CentroAdozioneControllerTest.java&#10;CentroAdozioneServiceTest.java" />
+    <MESSAGE value="Modify :&#10;Adottante.java&#10;CentroAdozione.java&#10;Volontario.java" />
+    <MESSAGE value="Modify :&#10;AbstractService.java&#10;AdottanteControllerTest.java&#10;CentroAdozioneMapper.java&#10;Converter.java&#10;EmailService.java&#10;VisitaMedicaController.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modify :&#10;AbstractService.java&#10;AdottanteControllerTest.java&#10;CentroAdozioneMapper.java&#10;Converter.java&#10;EmailService.java&#10;VisitaMedicaController.java" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/animali/animali/src/test/java/it/adozioni/animali/AdottanteTest/AdottanteServiceTest.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/animali/animali/src/test/java/it/adozioni/animali/AnimaliTest/AnimaleControllerTest.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/animali/animali/src/test/java/it/adozioni/animali/AnimaliTest/AnimaleServiceTest.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/animali/animali/src/test/java/it/adozioni/animali/CentroAdozioneTest/CentroAdozioneControllerTest.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/animali$AdottanteControllerTest.ic" NAME="AdottanteControllerTest Coverage Results" MODIFIED="1775119565599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>it.adozioni.animali.AdottanteTest.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/animali$AdottanteServiceTest.ic" NAME="AdottanteServiceTest Coverage Results" MODIFIED="1775118955581" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>it.adozioni.animali.AdottanteTest.*</FILTER>
+    </SUITE>
   </component>
 </project>

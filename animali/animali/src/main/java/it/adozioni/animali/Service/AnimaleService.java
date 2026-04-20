@@ -7,6 +7,7 @@ import it.adozioni.animali.Repository.AnimaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AnimaleService extends AbstractService<Animale, AnimaleDto> {
@@ -21,24 +22,9 @@ public class AnimaleService extends AbstractService<Animale, AnimaleDto> {
         this.animaleMapper = animaleMapper;
     }
 
-    // Fondamentale: accetta Integer per coerenza con il DB e i Model
     public Animale findByIdEntity(Integer id) {
-        if (id == null) {
-            System.err.println("SERVICE LOG: L'ID ricevuto è NULL!");
-            return null;
-        }
-
-        System.out.println("SERVICE LOG: Cerco nel Database l'animale con ID: " + id);
-
-        Animale trovato = animaleRepository.findById(id).orElse(null);
-
-        if (trovato == null) {
-            System.err.println("SERVICE LOG: Nessun animale trovato in PostgreSQL con ID: " + id);
-        } else {
-            System.out.println("SERVICE LOG: Animale trovato! Nome: " + trovato.getNome());
-        }
-
-        return trovato;
+        if (id == null) return null;
+        return animaleRepository.findById(id).orElse(null);
     }
 
     public List<AnimaleDto> findByNome(String nome) {
@@ -46,9 +32,11 @@ public class AnimaleService extends AbstractService<Animale, AnimaleDto> {
     }
 
     public List<AnimaleDto> findAllDisponibili() {
+        // Recupera le entità e le trasforma in DTO tramite il mapper
         return animaleMapper.toDTOList(animaleRepository.findByAdottatoFalse());
     }
 
+    @Override
     public List<AnimaleDto> findAll() {
         return animaleMapper.toDTOList(animaleRepository.findAll());
     }
@@ -57,16 +45,14 @@ public class AnimaleService extends AbstractService<Animale, AnimaleDto> {
         String s = (specie != null && !specie.isEmpty()) ? specie : null;
         String g = (genere != null && !genere.isEmpty()) ? genere : null;
 
-        // Qui dobbiamo assicurarci che la query nel repository filtri per adottato = false
-        // Se la tua query findFiltered è una @Query personalizzata, dovrai aggiungere "AND a.adottato = false"
         List<Animale> lista = animaleRepository.findFiltered(s, g, centroId);
 
-        // Se non vuoi toccare la query SQL, puoi filtrare qui con gli Stream (meno performante ma veloce da implementare)
+        // Filtriamo solo quelli non adottati e mappiamo a DTO
         return animaleMapper.toDTOList(
-                lista.stream().filter(a -> !a.isAdottato()).toList()
+                lista.stream().filter(a -> !a.isAdottato()).collect(Collectors.toList())
         );
     }
-//
+
     public List<AnimaleDto> getAnimaliByCentro(Long centroId) {
         return animaleMapper.toDTOList(animaleRepository.findByCentroAdozioneId(centroId));
     }

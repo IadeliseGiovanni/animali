@@ -6,51 +6,97 @@ import it.adozioni.animali.Model.CentroAdozione;
 import it.adozioni.animali.Repository.CentroAdozioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CentroAdozioneService {
+public class CentroAdozioneService implements ServiceDTO<CentroAdozioneDto> {
 
     @Autowired
     private CentroAdozioneRepository repository;
+
     @Autowired
     private CentroAdozioneMapper mapper;
 
-    // --- METODI PER "USER" ---
-    public List<CentroAdozioneDto> listaTuttiICentri() {
-        return repository.findAll().stream().map(mapper::toDTO).collect(Collectors.toList());
-    }
+    // --- METODI CRUD RICHIESTI DALL'INTERFACCIA ---
 
-    public List<CentroAdozioneDto> findByCitta(String citta) {
-        return repository.findByCitta(citta).stream().map(mapper::toDTO).collect(Collectors.toList());
-    }
-
-    public List<CentroAdozioneDto> findByIsNoProfit(boolean noProfit) {
-        return repository.findByIsNoProfit(noProfit).stream().map(mapper::toDTO).collect(Collectors.toList());
-    }
-
-    public CentroAdozioneDto findByNomeCentro(String nome) {
-        List<CentroAdozione> list = repository.findByNomeCentro(nome);
-        return list.isEmpty() ? null : mapper.toDTO(list.get(0));
-    }
-
-    // --- METODI PER "ADMIN" (Quelli che probabilmente ti danno rosso) ---
-    public CentroAdozioneDto salvaNuovo(CentroAdozioneDto dto) {
+    @Override
+    @Transactional
+    public CentroAdozioneDto insert(CentroAdozioneDto dto) {
+        if (dto == null) return null;
         CentroAdozione entity = mapper.toEntity(dto);
         CentroAdozione salvato = repository.save(entity);
         return mapper.toDTO(salvato);
     }
 
-    public CentroAdozioneDto aggiorna(Integer id, CentroAdozioneDto dto) {
-        if (!repository.existsById(id)) return null;
-        CentroAdozione entity = mapper.toEntity(dto);
-        entity.setId(id); // Assicura che stiamo aggiornando lo stesso ID
-        return mapper.toDTO(repository.save(entity));
+    @Override
+    @Transactional(readOnly = true)
+    public CentroAdozioneDto read(Integer id) {
+        return repository.findById(id).map(mapper::toDTO).orElse(null);
     }
-//
+
+    @Override
+    @Transactional
+    public CentroAdozioneDto update(CentroAdozioneDto dto) {
+        return insert(dto);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Integer id) {
+        elimina(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Iterable<CentroAdozioneDto> getAll() {
+        return listaTuttiICentri();
+    }
+
+    // --- ALTRI METODI ESISTENTI ---
+
+    @Transactional(readOnly = true)
+    public List<CentroAdozioneDto> listaTuttiICentri() {
+        return repository.findAll().stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public CentroAdozioneDto salvaNuovo(CentroAdozioneDto dto) {
+        return insert(dto);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CentroAdozioneDto> findByCitta(String citta) {
+        return repository.findByCitta(citta).stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<CentroAdozioneDto> findByIsNoProfit(boolean noProfit) {
+        return repository.findByIsNoProfit(noProfit).stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public CentroAdozioneDto findByNomeCentro(String nome) {
+        List<CentroAdozione> list = repository.findByNomeCentro(nome);
+        return list.isEmpty() ? null : mapper.toDTO(list.get(0));
+    }
+
+    /**
+     * IMPLEMENTAZIONE ELIMINA:
+     * Richiamata sia dal metodo delete() dell'interfaccia che dal Controller.
+     */
+    @Transactional
     public void elimina(Integer id) {
-        repository.deleteById(id);
+        if (id != null) {
+            repository.deleteById(id);
+        }
     }
 }

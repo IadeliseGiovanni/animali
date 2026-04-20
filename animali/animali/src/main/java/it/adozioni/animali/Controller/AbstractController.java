@@ -1,6 +1,7 @@
 package it.adozioni.animali.Controller;
 
 import it.adozioni.animali.Dto.VisitaMedicaDto;
+import it.adozioni.animali.Service.AdottanteService;
 import it.adozioni.animali.Service.ServiceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,4 +39,5 @@ public abstract class AbstractController <DTO>{
         return service.read(id);
     }
 
+    protected abstract AdottanteService getService();
 }
