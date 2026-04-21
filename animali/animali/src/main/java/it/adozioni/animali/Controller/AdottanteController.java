@@ -48,22 +48,25 @@ public class AdottanteController extends AbstractController<AdottanteDto> {
         return adottanteService.read(id);
     }
 
-    @GetMapping("/lista")
+    @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<AdottanteDto>> getAll() {
         return ResponseEntity.ok(adottanteService.findAllAdottantiTrue());
     }
 
-    @PutMapping("/{id}/idoneita")
+    @PatchMapping("/{id}/idoneita")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> cambiaIdoneita(@PathVariable int id, @RequestParam boolean stato) {
         adottanteService.aggiornaIdoneita(id, stato);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}/ruolo")
+    @PatchMapping("/{id}/ruolo")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> cambiaRuolo(@PathVariable int id, @RequestParam String ruolo) {
+    public ResponseEntity<?> cambiaRuolo(
+            @PathVariable int id,
+            @RequestParam("nuovoRuolo") String ruolo // Specifica il nome qui
+    ) {
         adottanteService.aggiornaRuolo(id, ruolo);
         return ResponseEntity.ok().build();
     }
