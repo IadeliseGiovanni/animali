@@ -64,11 +64,6 @@ public class CentroAdozioneService implements ServiceDTO<CentroAdozioneDto> {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    public CentroAdozioneDto salvaNuovo(CentroAdozioneDto dto) {
-        return insert(dto);
-    }
-
     @Transactional(readOnly = true)
     public List<CentroAdozioneDto> findByCitta(String citta) {
         return repository.findByCitta(citta).stream()
@@ -98,5 +93,16 @@ public class CentroAdozioneService implements ServiceDTO<CentroAdozioneDto> {
         if (id != null) {
             repository.deleteById(id);
         }
+    }
+
+    public CentroAdozioneDto salvaNuovo(CentroAdozioneDto dto) {
+        // 1. Converti DTO in Entity
+        CentroAdozione entity = mapper.toEntity(dto);
+
+        // 2. Salva sul DB tramite Repository
+        CentroAdozione salvato = repository.save(entity);
+
+        // 3. Riconverti in DTO e restituisci
+        return mapper.toDTO(salvato);
     }
 }

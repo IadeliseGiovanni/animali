@@ -1,5 +1,6 @@
 package it.adozioni.animali.Dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import it.adozioni.animali.Model.Animale;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,7 @@ public class VisitaMedicaDto {
 
     private Integer id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime data;
 
     private String esito;

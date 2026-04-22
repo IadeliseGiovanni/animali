@@ -29,6 +29,11 @@ public class CentroAdozioneController extends AbstractController<CentroAdozioneD
         return ResponseEntity.ok(centroService.listaTuttiICentri());
     }
 
+    @DeleteMapping("/delete")
+    public void delete(@RequestParam("id") Integer id) {
+        centroService.delete(id);
+    }
+
     @GetMapping("/citta/{citta}")
     public List<CentroAdozioneDto> findByCitta(@PathVariable String citta) {
         return centroService.findByCitta(citta);
@@ -77,5 +82,14 @@ public class CentroAdozioneController extends AbstractController<CentroAdozioneD
         } catch (Exception e) {
             return "--- SONO ADMIN --- ERRORE ADMIN: Impossibile creare il centro. Dettaglio: " + e.getMessage();
         }
+    }
+
+    @PostMapping("/nuovo")
+    public ResponseEntity<CentroAdozioneDto> aggiungiCentro(@RequestBody CentroAdozioneDto dto) {
+        // Chiamiamo il service per il salvataggio
+        CentroAdozioneDto nuovoCentro = centroService.salvaNuovo(dto);
+
+        // Restituiamo 200 OK (o 201 Created) con il corpo del centro creato
+        return ResponseEntity.ok(nuovoCentro);
     }
 }

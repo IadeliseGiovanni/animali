@@ -29,6 +29,10 @@ public class VisitaMedicaService extends AbstractService<VisitaMedica, VisitaMed
         this.visitaMedicaMapper = mapper;
     }
 
+    public List<VisitaMedicaDto> getAll(){
+        return visitaMedicaMapper.toDTOList(repository.findAll());
+    }
+
     /**
      * 🟢 FIX OBBLIGATORIO PER L'ERRORE DI COMPILAZIONE
      * Questo metodo DEVE esserci perché l'AbstractService lo richiede.

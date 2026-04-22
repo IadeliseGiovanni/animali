@@ -70,4 +70,10 @@ public class AdottanteController extends AbstractController<AdottanteDto> {
         adottanteService.aggiornaRuolo(id, ruolo);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestParam("id") Integer id) {
+        adottanteService.delete(id);
+    }
+
 }

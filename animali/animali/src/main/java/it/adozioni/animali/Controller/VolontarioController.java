@@ -17,13 +17,6 @@ public class VolontarioController extends AbstractController<VolontarioDto> {
     @Autowired
     private VolontarioService service;
 
-    /**
-     * 🟢 RIPARAZIONE OBBLIGATORIA:
-     * Dato che l'Abstract non si può toccare e vuole un AdottanteService,
-     * dobbiamo cambiare il tipo di ritorno del metodo, ma restituire il nostro service.
-     * Java lo accetta solo se facciamo un cast (anche se sporco) o se AdottanteService
-     * è visto come il tipo base.
-     */
     @Override
     @SuppressWarnings("unchecked")
     protected AdottanteService getService() {

@@ -30,7 +30,7 @@ public class VisitaMedica {
 
     private String note;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "animale_id", nullable = true)
     @JsonIgnore
     private Animale animale;//

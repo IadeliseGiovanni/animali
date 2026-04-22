@@ -1,7 +1,10 @@
 package it.adozioni.animali.Controller;
 
 import it.adozioni.animali.Dto.AnimaleDto;
+import it.adozioni.animali.Dto.CentroAdozioneDto;
 import it.adozioni.animali.Dto.VisitaMedicaDto;
+import it.adozioni.animali.Dto.VolontarioDto;
+import it.adozioni.animali.Model.VisitaMedica;
 import it.adozioni.animali.Service.AdottanteService;
 import it.adozioni.animali.Service.VisitaMedicaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +22,9 @@ public class VisitaMedicaController extends AbstractController<VisitaMedicaDto> 
     @Autowired
     private VisitaMedicaService service;
 
-    @GetMapping
-    public ResponseEntity<List<AnimaleDto>> getAll() {
-        return ResponseEntity.ok(service.findAll());
+    @GetMapping("/all")
+    public ResponseEntity<List<VisitaMedicaDto>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/findByData")
@@ -47,6 +50,16 @@ public class VisitaMedicaController extends AbstractController<VisitaMedicaDto> 
     @GetMapping("/findByDataAndEsito")
     public List<VisitaMedicaDto> findByDataAndEsito(@RequestParam("data") LocalDateTime data, @RequestParam("esito") String esito) {
         return service.findByDataAndEsito(data, esito);
+    }
+
+    @PostMapping("/insert")
+    public VisitaMedicaDto insert(@RequestBody VisitaMedicaDto dto) {
+        return service.insert(dto);
+    }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestParam("id") Integer id) {
+        service.delete(id);
     }
 
     @Override

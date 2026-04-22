@@ -3,6 +3,7 @@ package it.adozioni.animali.Controller;
 import it.adozioni.animali.Dto.AdozioneRequestDto;
 import it.adozioni.animali.Dto.AnimaleDto;
 import it.adozioni.animali.Dto.ResultDto;
+import it.adozioni.animali.Dto.VolontarioDto;
 import it.adozioni.animali.Model.Adottante;
 import it.adozioni.animali.Model.Animale;
 import it.adozioni.animali.Service.AdottanteService;
@@ -38,9 +39,14 @@ public class AnimaleController extends AbstractController<AnimaleDto> {
         return adottanteService;
     }
 
+    @GetMapping("/allFiltrati")
+    public ResponseEntity<List<AnimaleDto>> getAllFiltrati() {
+        return ResponseEntity.ok(animaleService.findAllDisponibili());
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<AnimaleDto>> getAll() {
-        return ResponseEntity.ok(animaleService.findAllDisponibili());
+        return ResponseEntity.ok(animaleService.findAll());
     }
 
     @GetMapping("/search")
@@ -94,4 +100,15 @@ public class AnimaleController extends AbstractController<AnimaleDto> {
                     .body(ResultDto.error("Errore critico durante il processo: Errore PDF"));
         }
     }
+
+    @PostMapping("/insert")
+    public AnimaleDto insert(@RequestBody AnimaleDto dto) {
+        return animaleService.insert(dto);
+    }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestParam("id") Integer id) {
+        animaleService.delete(id);
+    }
+
 }
