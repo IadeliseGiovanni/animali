@@ -25,6 +25,7 @@ public class AdottanteDto {
     private LocalDateTime dataDiNascita;
     private String ruolo;
 
+    private String statoIdoneita;
     private Animale animale;
     private String indirizzo;
     private String codiceFiscale;

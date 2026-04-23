@@ -82,4 +82,12 @@ public class Adottante implements UserDetails { //implementando dice usa questa 
 
     @Override
     public boolean isEnabled() { return this.enabled; }
+
+    public enum StatoIdoneita {
+        NON_RICHIESTA, IN_ATTESA, IDONEO, NON_IDONEO
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "stato_idoneita")
+    private StatoIdoneita statoIdoneita = StatoIdoneita.NON_RICHIESTA;
 }

@@ -119,7 +119,18 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
     @Transactional
     public void aggiornaIdoneita(int id, boolean stato) {
         adottanteRepository.findById(id).ifPresent(a -> {
+            // 1. Aggiorna il flag booleano
             a.setIsSchedato(stato);
+
+            // 2. Sincronizza lo stato testuale (Enum)
+            if (stato) {
+                // Se l'admin lo rende idoneo
+                a.setStatoIdoneita(Adottante.StatoIdoneita.IDONEO);
+            } else {
+                // Se l'admin toglie l'idoneità, resettiamo lo stato così può richiederla
+                a.setStatoIdoneita(Adottante.StatoIdoneita.NON_RICHIESTA);
+            }
+
             adottanteRepository.save(a);
         });
     }
@@ -175,4 +186,23 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
         // 4. Ritorno il DTO aggiornato
         return adottanteMapper.toDTO(salvato);
     }
+
+    @Transactional
+    public void avviaPraticaIdoneita(Integer adottanteId) {
+        Adottante adottante = adottanteRepository.findById(adottanteId)
+                .orElseThrow(() -> new RuntimeException("Adottante non trovato"));
+
+        // Controlliamo se è null OPPURE se è diverso da NON_RICHIESTA
+        if (adottante.getStatoIdoneita() != null &&
+                adottante.getStatoIdoneita() != Adottante.StatoIdoneita.NON_RICHIESTA) {
+            throw new RuntimeException("Esiste già una pratica in corso o sei già idoneo.");
+        }
+
+        // Se è null o NON_RICHIESTA, procediamo
+        adottante.setStatoIdoneita(Adottante.StatoIdoneita.IN_ATTESA);
+        adottanteRepository.save(adottante);
+
+        emailService.inviaConfermaRichiestaIdoneita(adottante.getEmail(), adottante.getNome());
+    }
+
 }

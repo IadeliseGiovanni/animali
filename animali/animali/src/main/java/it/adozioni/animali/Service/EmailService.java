@@ -144,4 +144,30 @@ public class EmailService {
             System.err.println("ERRORE INVIO MAIL CONFERMA RESET: " + e.getMessage());
         }
     }
+
+    public void inviaConfermaRichiestaIdoneita(String destinatario, String nomeUtente) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, false);
+
+            helper.setFrom(emailSorgente);
+            helper.setTo(destinatario);
+            helper.setSubject("Richiesta Idoneità Ricevuta! 🐾 - PetFlow");
+
+            StringBuilder testo = new StringBuilder();
+            testo.append("Ciao ").append(nomeUtente).append(",\n\n");
+            testo.append("Abbiamo ricevuto la tua richiesta per ottenere l'idoneità all'adozione su PetFlow.\n\n");
+            testo.append("Il nostro staff valuterà i tuoi dati e ti contatterà al più presto per fissare un eventuale colloquio conoscitivo.\n\n");
+            testo.append("Puoi controllare lo stato della tua richiesta direttamente dal tuo profilo.\n\n");
+            testo.append("Grazie per aver scelto di donare una casa a un piccolo amico!\n\n");
+            testo.append("Cordiali saluti,\nLo Staff di PetFlow 🐾");
+
+            helper.setText(testo.toString());
+            mailSender.send(message);
+
+            System.out.println("LOG: Email richiesta idoneità inviata a " + destinatario);
+        } catch (MessagingException e) {
+            System.err.println("ERRORE INVIO MAIL IDONEITA: " + e.getMessage());
+        }
+    }
 }

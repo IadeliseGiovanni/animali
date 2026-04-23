@@ -42,7 +42,7 @@ public class AdottanteController extends AbstractController<AdottanteDto> {
      */
     @GetMapping("/read")
     @Override
-    @PreAuthorize("hasAnyRole('ADOTTANTE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public AdottanteDto read(@RequestParam("id") Integer id) {
         return adottanteService.read(id);
     }
@@ -79,4 +79,16 @@ public class AdottanteController extends AbstractController<AdottanteDto> {
     public ResponseEntity<AdottanteDto> patch(@PathVariable Integer id, @RequestBody AdottanteDto dto) {
         return ResponseEntity.ok(adottanteService.patch(id, dto));
     }
+
+    @PostMapping("/{id}/richiedi-idoneita")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<?> richiediIdoneita(@PathVariable Integer id) {
+        try {
+            adottanteService.avviaPraticaIdoneita(id);
+            return ResponseEntity.ok().body("{\"message\": \"Richiesta presa in carico\"}");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
+        }
+    }
+
 }

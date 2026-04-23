@@ -89,7 +89,7 @@ public class AuthController {
             } else if (principal instanceof Volontario) {
                 Volontario v = (Volontario) principal;
                 response.put("nome", v.getNome());
-                response.put("ruolo", "VOLONTARIO");
+                response.put("ruolo", v.getRuolo());
             }
 
             return ResponseEntity.ok(response);
