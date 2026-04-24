@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class AdottanteDto {
     private String email;
     private String telefono;
     private Boolean isSchedato;
-    private LocalDateTime dataDiNascita;
+    private LocalDate dataDiNascita;
     private String ruolo;
 
     private String statoIdoneita;

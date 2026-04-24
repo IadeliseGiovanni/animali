@@ -3,6 +3,7 @@ package it.adozioni.animali.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Adottante implements UserDetails { //implementando dice usa questa 
     private String telefono;
     private Boolean isSchedato;
 
-    private LocalDateTime dataDiNascita;
+    private LocalDate dataDiNascita;
 
     private String codiceFiscale;
 

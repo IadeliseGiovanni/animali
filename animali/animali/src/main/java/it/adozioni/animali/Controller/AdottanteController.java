@@ -91,4 +91,34 @@ public class AdottanteController extends AbstractController<AdottanteDto> {
         }
     }
 
+    @PostMapping("/{id}/richiedi-cambio-email")
+    public ResponseEntity<String> richiediCambio(
+            @PathVariable Integer id,
+            @RequestParam String nuovaEmail) {
+
+        // Chiamata al service che abbiamo sistemato prima
+        String messaggio = adottanteService.richiediCambioEmail(id, nuovaEmail);
+
+        return ResponseEntity.ok(messaggio);
+    }
+
+    @GetMapping("/conferma-email")
+    public ResponseEntity<String> confermaEmail(@RequestParam String token) {
+        adottanteService.confermaCambioEmail(token);
+        return ResponseEntity.ok("Email aggiornata con successo! Ora puoi accedere con le nuove credenziali.");
+    }
+
+    @PatchMapping("/{id}/cambia-password")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<?> cambiaPassword(
+            @PathVariable Integer id,
+            @RequestParam String vecchiaPassword,
+            @RequestParam String nuovaPassword) {
+        try {
+            adottanteService.cambiaPassword(id, vecchiaPassword, nuovaPassword);
+            return ResponseEntity.ok().body("{\"message\": \"Password aggiornata con successo\"}");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
+        }
+    }
 }

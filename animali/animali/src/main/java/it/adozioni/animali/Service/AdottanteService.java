@@ -4,7 +4,10 @@ import it.adozioni.animali.Dto.AdottanteDto;
 import it.adozioni.animali.Dto.AnimaleDto;
 import it.adozioni.animali.Mapper.AdottanteMapper;
 import it.adozioni.animali.Model.Adottante;
+import it.adozioni.animali.Model.EmailConfirmationToken;
 import it.adozioni.animali.Repository.AdottanteRepository;
+import it.adozioni.animali.Repository.EmailConfirmationTokenRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,17 +29,19 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
     private final AdottanteMapper adottanteMapper;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final EmailConfirmationTokenRepository tokenRepository;
 
     @Autowired
     public AdottanteService(AdottanteRepository adottanteRepository,
                             AdottanteMapper adottanteMapper,
                             @Lazy PasswordEncoder passwordEncoder,
-                            EmailService emailService) {
+                            EmailService emailService, EmailConfirmationTokenRepository tokenRepository) {
         super(adottanteRepository, adottanteMapper);
         this.adottanteRepository = adottanteRepository;
         this.adottanteMapper = adottanteMapper;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.tokenRepository = tokenRepository;
     }
 
     /**
@@ -156,34 +162,20 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
 
     @Transactional
     public AdottanteDto patch(Integer id, AdottanteDto dto) {
-        // 1. Recupero l'entità esistente dal DB
-        Adottante esistente = adottanteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Adottante non trovato con ID: " + id));
+        // 1. Recupero l'entità esistente
+        Adottante adottante = adottanteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Adottante non trovato con ID: " + id));
 
-        // 2. Aggiorno solo i campi anagrafici se presenti nel DTO
-        if (dto.getNome() != null) {
-            esistente.setNome(dto.getNome());
-        }
-        if (dto.getCognome() != null) {
-            esistente.setCognome(dto.getCognome());
-        }
-        if (dto.getCodiceFiscale() != null) {
-            esistente.setCodiceFiscale(dto.getCodiceFiscale());
-        }
-        if (dto.getTelefono() != null) {
-            esistente.setTelefono(dto.getTelefono());
-        }
-        if (dto.getIndirizzo() != null) {
-            esistente.setIndirizzo(dto.getIndirizzo());
-        }
-        if (dto.getEmail() != null) {
-            esistente.setEmail(dto.getEmail());
-        }
+        // 2. Aggiorno solo i campi anagrafici (NON l'email)
+        if (dto.getNome() != null) adottante.setNome(dto.getNome());
+        if (dto.getCognome() != null) adottante.setCognome(dto.getCognome());
+        if (dto.getDataDiNascita() != null) adottante.setDataDiNascita(dto.getDataDiNascita());
+        if (dto.getIndirizzo() != null) adottante.setIndirizzo(dto.getIndirizzo());
+        if (dto.getTelefono() != null) adottante.setTelefono(dto.getTelefono());
+        if (dto.getCodiceFiscale() != null) adottante.setCodiceFiscale(dto.getCodiceFiscale());
 
-        // 3. Salvo l'entità aggiornata (la password rimane quella originale già presente in 'esistente')
-        Adottante salvato = adottanteRepository.save(esistente);
-
-        // 4. Ritorno il DTO aggiornato
+        // 3. Salvo e ritorno il DTO aggiornato
+        Adottante salvato = adottanteRepository.save(adottante);
         return adottanteMapper.toDTO(salvato);
     }
 
@@ -205,4 +197,82 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
         emailService.inviaConfermaRichiestaIdoneita(adottante.getEmail(), adottante.getNome());
     }
 
+    @Transactional
+    public String richiediCambioEmail(Integer adottanteId, String nuovaEmail) {
+        Adottante adottante = adottanteRepository.findById(adottanteId)
+                .orElseThrow(() -> new RuntimeException("Adottante non trovato"));
+
+        // 1. Cerca il token esistente
+        tokenRepository.findByAdottante(adottante).ifPresent(token -> {
+            tokenRepository.delete(token);
+            // 2. FORZA la cancellazione immediata sul database
+            tokenRepository.flush();
+        });
+
+        // 3. Ora procedi con la creazione del nuovo token
+        String stringToken = UUID.randomUUID().toString();
+        EmailConfirmationToken newToken = new EmailConfirmationToken();
+        newToken.setToken(stringToken);
+        newToken.setNuovaEmail(nuovaEmail);
+        newToken.setAdottante(adottante);
+        newToken.setDataScadenza(LocalDateTime.now().plusHours(24));
+
+        tokenRepository.save(newToken);
+
+        String linkConferma = "http://localhost:8080/api/Adottante/conferma-email?token=" + stringToken;
+        emailService.inviaMailConferma(nuovaEmail, linkConferma);
+
+        return "Email inviata con successo!";
+    }
+
+    @Transactional
+    public void confermaCambioEmail(String token) {
+        // 1. Recupera il token con i dati dell'adottante caricati
+        EmailConfirmationToken confermaToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new RuntimeException("Token non valido o già utilizzato."));
+
+        // 2. Prendi l'adottante associato
+        Adottante adottante = confermaToken.getAdottante();
+        String vecchiaEmail = adottante.getEmail();
+        String nuovaEmail = confermaToken.getNuovaEmail();
+
+        // 3. AGGIORNA L'EMAIL
+        adottante.setEmail(nuovaEmail);
+
+        // 4. SALVA E FORZA IL FLUSH IMMEDIATO
+        // Questo è il passaggio che mancava per rendere il cambio effettivo subito
+        adottanteRepository.saveAndFlush(adottante);
+
+        // 5. CANCELLA IL TOKEN
+        tokenRepository.delete(confermaToken);
+        tokenRepository.flush(); // Puliamo anche qui
+
+        // 6. INVIA LA NOTIFICA (alla vecchia email per sicurezza)
+        try {
+            emailService.inviaNotificaCambioEffettuato(vecchiaEmail, nuovaEmail);
+        } catch (Exception e) {
+            // Logga l'errore ma non bloccare la transazione se la mail fallisce
+            System.err.println("Notifica di sicurezza fallita: " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void cambiaPassword(Integer adottanteId, String vecchiaPassword, String nuovaPassword) {
+        Adottante adottante = adottanteRepository.findById(adottanteId)
+                .orElseThrow(() -> new RuntimeException("Adottante non trovato"));
+
+        // 1. Verifica che la password attuale sia corretta
+        if (!passwordEncoder.matches(vecchiaPassword, adottante.getPassword())) {
+            throw new RuntimeException("La password attuale non è corretta");
+        }
+
+        // 2. Cripta e imposta la nuova password
+        adottante.setPassword(passwordEncoder.encode(nuovaPassword));
+
+        // 3. Salva e forza il commit
+        adottanteRepository.saveAndFlush(adottante);
+
+        // 4. Invia email di conferma (notifica di sicurezza)
+        emailService.inviaConfermaCambioPassword(adottante.getEmail());
+    }
 }

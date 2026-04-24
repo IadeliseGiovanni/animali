@@ -170,4 +170,20 @@ public class EmailService {
             System.err.println("ERRORE INVIO MAIL IDONEITA: " + e.getMessage());
         }
     }
+
+    public void inviaMailConferma(String emailDestinatario, String link) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(emailDestinatario);
+        message.setSubject("Conferma il tuo nuovo indirizzo Email - PetFlow");
+        message.setText("Clicca sul link per confermare la tua nuova email: " + link);
+        mailSender.send(message);
+    }
+
+    public void inviaNotificaCambioEffettuato(String vecchiaEmail, String nuovaEmail) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(vecchiaEmail);
+        message.setSubject("Il tuo indirizzo Email è stato aggiornato");
+        message.setText("Ti informiamo che l'email associata al tuo account è stata cambiata con successo in: " + nuovaEmail);
+        mailSender.send(message);
+    }
 }
