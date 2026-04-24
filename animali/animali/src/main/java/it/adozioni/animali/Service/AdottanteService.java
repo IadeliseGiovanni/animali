@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -274,5 +275,49 @@ public class AdottanteService extends AbstractService<Adottante, AdottanteDto> i
 
         // 4. Invia email di conferma (notifica di sicurezza)
         emailService.inviaConfermaCambioPassword(adottante.getEmail());
+    }
+
+    // AdottanteService.java
+
+    @Transactional // Fondamentale per scrivere fisicamente sul DB
+    public void salvaResetToken(Integer id, String token) {
+        Adottante adottante = adottanteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+
+        adottante.setResetToken(token);
+        // Imposta la scadenza a 30 minuti da ora
+        adottante.setResetTokenExpiration(LocalDateTime.now().plusMinutes(30));
+
+        // Forza il salvataggio immediato
+        adottanteRepository.saveAndFlush(adottante);
+    }
+
+    @Transactional
+    public boolean aggiornaPasswordConToken(String token, String nuovaPassword) {
+        // Pulisci il token da eventuali spazi bianchi invisibili
+        String cleanToken = token.trim();
+        System.out.println("DEBUG: Ricerca nel DB per token: [" + cleanToken + "]");
+
+        Optional<Adottante> opzionale = adottanteRepository.findByResetToken(cleanToken);
+
+        if (opzionale.isPresent()) {
+            Adottante adottante = opzionale.get();
+            System.out.println("DEBUG: Utente trovato: " + adottante.getEmail());
+
+            if (adottante.getResetTokenExpiration().isAfter(LocalDateTime.now())) {
+                adottante.setPassword(passwordEncoder.encode(nuovaPassword));
+
+                // Fondamentale: resetta i campi
+                adottante.setResetToken(null);
+                adottante.setResetTokenExpiration(null);
+
+                adottanteRepository.saveAndFlush(adottante);
+                return true;
+            }
+            System.out.println("DEBUG: Token scaduto il: " + adottante.getResetTokenExpiration());
+        } else {
+            System.out.println("DEBUG: Token non trovato nel database.");
+        }
+        return false;
     }
 }

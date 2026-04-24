@@ -4,8 +4,10 @@ import it.adozioni.animali.Dto.AdottanteDto;
 import it.adozioni.animali.Dto.LoginRequest;
 import it.adozioni.animali.Dto.VolontarioDto;
 import it.adozioni.animali.Model.Adottante;
+import it.adozioni.animali.Model.PasswordResetToken;
 import it.adozioni.animali.Model.Volontario;
 import it.adozioni.animali.Service.AdottanteService;
+import it.adozioni.animali.Service.EmailService;
 import it.adozioni.animali.Service.JwtService;
 import it.adozioni.animali.Service.VolontarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -35,6 +38,9 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private EmailService emailService;
 
     /**
      * Registrazione Adottante.
@@ -144,5 +150,46 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Errore durante il reinvio: " + e.getMessage());
         }
+    }
+
+    // AuthController.java
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+        try {
+            // 1. Cerchiamo l'utente (Adottante o Volontario)
+            Adottante adottante = adottanteService.findByEmailEntity(email);
+            if (adottante == null) {
+                return ResponseEntity.ok("Se l'email è registrata, riceverai un link a breve.");
+            }
+
+            // 2. Generiamo un token univoco (UUID)
+            String token = UUID.randomUUID().toString();
+
+            // 3. Salviamo il token nel DB associato all'utente
+            // (Assicurati di avere un campo 'resetToken' nel model Adottante)
+            adottanteService.salvaResetToken(adottante.getId(), token);
+
+            // 4. Inviamo l'email tramite il tuo EmailService
+            emailService.sendResetEmail(email, token);
+
+            return ResponseEntity.ok("Email di reset inviata.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/reset-password-confirm")
+    public ResponseEntity<?> resetPasswordConfirm(@RequestBody Map<String, String> request) {
+        String token = request.get("token");
+        String newPassword = request.get("newPassword");
+
+        boolean success = adottanteService.aggiornaPasswordConToken(token, newPassword);
+
+        if (success) {
+            // Restituisci una mappa, che Spring trasformerà in JSON { "message": "..." }
+            return ResponseEntity.ok(Map.of("message", "Password aggiornata con successo!"));
+        }
+        return ResponseEntity.badRequest().body(Map.of("error", "Token non valido o scaduto."));
     }
 }

@@ -25,6 +25,8 @@ public class AdottanteDto {
     private Boolean isSchedato;
     private LocalDate dataDiNascita;
     private String ruolo;
+    private String resetToken;
+    private LocalDateTime resetTokenExpiration;
 
     private String statoIdoneita;
     private Animale animale;

@@ -38,6 +38,9 @@ public class Adottante implements UserDetails { //implementando dice usa questa 
 
     private String codiceFiscale;
 
+    private String resetToken;
+    private LocalDateTime resetTokenExpiration;
+
     private String indirizzo;
 
     @Column(nullable = false)

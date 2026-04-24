@@ -22,4 +22,6 @@ public interface AdottanteRepository extends JpaRepository<Adottante, Integer> {
 
     @Query("SELECT a FROM Adottante a LEFT JOIN FETCH a.animaliAdottati WHERE a.email = :email")
     Optional<Adottante> findByEmailWithAnimals(@Param("email") String email);
+
+    Optional<Adottante> findByResetToken(String resetToken);
 }//

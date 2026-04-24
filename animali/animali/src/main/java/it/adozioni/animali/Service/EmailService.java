@@ -186,4 +186,35 @@ public class EmailService {
         message.setText("Ti informiamo che l'email associata al tuo account è stata cambiata con successo in: " + nuovaEmail);
         mailSender.send(message);
     }
+
+    public void sendResetEmail(String userEmail, String token) {
+        // Il link punta alla rotta che creerai in Angular
+        String resetUrl = "http://localhost:4200/reset-password?token=" + token;
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(userEmail);
+            helper.setSubject("PetFlow - Recupero Password");
+
+            // Testo HTML dell'email
+            String content = "<h3>Richiesta di Reset Password</h3>"
+                    + "<p>Ciao,</p>"
+                    + "<p>Abbiamo ricevuto una richiesta di reset password per il tuo account PetFlow.</p>"
+                    + "<p>Clicca sul pulsante qui sotto per procedere:</p>"
+                    + "<a href=\"" + resetUrl + "\" style=\""
+                    + "background-color: #f38131; color: white; padding: 10px 20px; "
+                    + "text-decoration: none; border-radius: 5px; display: inline-block;"
+                    + "\">Resetta Password</a>"
+                    + "<p>Se non hai richiesto tu il reset, ignora questa email.</p>"
+                    + "<br><p>Il team PetFlow 🐾</p>";
+
+            helper.setText(content, true); // 'true' indica che è HTML
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Errore nell'invio dell'email: " + e.getMessage());
+        }
+    }
 }
