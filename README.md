@@ -8,7 +8,7 @@
 
 ## 🐾 Progetto
 
-**PetFlow** è una piattaforma Full Stack progettata per digitalizzare e ottimizzare il processo di adozione degli animali. Il sistema permette di gestire l'intero ciclo di vita dell'adozione: dall'inserimento dell'animale nel database fino alla gestione degli eventi e degli adottanti, garantendo sicurezza e integrità dei dati tramite autenticazione **JWT**.
+**PetFlow** è una piattaforma Full Stack progettata per digitalizzare e ottimizzare il processo di adozione degli animali. Il sistema permette di gestire l'intero ciclo di vita dell'adozione, dall'inserimento dell'animale nel database fino alla gestione degli eventi e degli adottanti, garantendo sicurezza e integrità dei dati tramite autenticazione **JWT**.
 
 ### 🛠️ Architettura e Meccanismo
 Il progetto segue un approccio professionale basato sulla separazione delle responsabilità (**Separation of Concerns**):
